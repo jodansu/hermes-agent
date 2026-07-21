@@ -1918,6 +1918,11 @@ def handle_max_iterations(agent, messages: list, api_call_count: int) -> str:
         api_messages = []
         for msg in messages:
             api_msg = msg.copy()
+            # DeepSeek & other strict providers reject tool_calls: [] (empty array).
+            # Remove the key entirely when it is present but empty.
+            tc = api_msg.get("tool_calls")
+            if isinstance(tc, list) and len(tc) == 0:
+                del api_msg["tool_calls"]
             agent._copy_reasoning_content_for_api(msg, api_msg)
             for internal_field in ("reasoning", "finish_reason", "_thinking_prefill"):
                 api_msg.pop(internal_field, None)
