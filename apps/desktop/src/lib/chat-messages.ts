@@ -150,6 +150,59 @@ export function chatMessageText(message: ChatMessage): string {
     .join('')
 }
 
+export interface UnspokenTurnSpeech {
+  /** First unspoken assistant bubble — stable for the turn, the live speech session binds to it. */
+  id: string
+  /** Whether the newest assistant bubble is still streaming. */
+  pending: boolean
+  /** All unspoken assistant text in message order, bubbles joined on a blank line. */
+  text: string
+}
+
+/**
+ * Collect every unspoken assistant bubble after `lastSpokenId`, in order.
+ *
+ * A turn with tool calls produces several assistant bubbles — narration
+ * ("Let me check…") sealed as interims, then the final answer as a fresh
+ * bubble. Voice conversation speaks a turn through ONE live session bound to
+ * one response id, so it needs all of that text as a single growing string;
+ * selecting only one bubble silently drops everything after it. The blank-line
+ * join is a sentence boundary for the server's cutter, so a sealed bubble's
+ * tail is flushed as soon as the next bubble starts.
+ */
+export function collectUnspokenTurnSpeech(
+  messages: ChatMessage[],
+  lastSpokenId: string | null
+): UnspokenTurnSpeech | null {
+  const spokenIndex = lastSpokenId ? messages.findLastIndex(m => m.id === lastSpokenId) : -1
+
+  let id: string | null = null
+  let pending = false
+  const parts: string[] = []
+
+  for (const message of messages.slice(spokenIndex + 1)) {
+    if (message.role !== 'assistant' || message.hidden) {
+      continue
+    }
+
+    pending = Boolean(message.pending)
+    const text = chatMessageText(message).trim()
+
+    if (!text) {
+      continue
+    }
+
+    id ??= message.id
+    parts.push(text)
+  }
+
+  if (!id) {
+    return null
+  }
+
+  return { id, pending, text: parts.join('\n\n') }
+}
+
 const normalizeWs = (value: string) => value.replace(/\s+/g, ' ').trim()
 
 /**
@@ -248,6 +301,29 @@ function displayContentForMessage(role: SessionMessage['role'], content: unknown
   const refs = [...new Set(Array.from(attachedContext.matchAll(CONTEXT_REF_RE)).map(match => match[0]))]
 
   return [refs.join('\n'), visibleText].filter(Boolean).join('\n\n') || visibleText
+}
+
+function transcriptContent(displayKind: SessionMessage['display_kind'], content: string): string | null {
+  return displayKind === 'hidden' ? null : content
+}
+
+function timelineDisplayContent(message: SessionMessage, content: string): string {
+  if (message.display_kind === 'model_switch') {
+    return 'model changed'
+  }
+
+  if (message.display_kind === 'async_delegation_complete') {
+    const count =
+      message.display_metadata && 'task_count' in message.display_metadata
+        ? message.display_metadata.task_count
+        : undefined
+
+    return count === undefined
+      ? 'background agent work finished'
+      : `${count} background agent${count === 1 ? '' : 's'} finished`
+  }
+
+  return content
 }
 
 const STREAM_PART: Record<'reasoning' | 'text', (text: string) => ChatMessagePart> = {
@@ -831,7 +907,17 @@ export function toChatMessages(messages: SessionMessage[]): ChatMessage[] {
     }
 
     const content = message.content || message.text || message.context || message.name
-    const displayContent = displayContentForMessage(message.role, content)
+
+    const displayContent = transcriptContent(
+      message.display_kind,
+      timelineDisplayContent(message, displayContentForMessage(message.role, content))
+    )
+
+    const displayRole =
+      message.display_kind === 'model_switch' || message.display_kind === 'async_delegation_complete'
+        ? 'system'
+        : message.role
+
     const parts: ChatMessagePart[] = []
 
     const reasoning =
@@ -844,7 +930,7 @@ export function toChatMessages(messages: SessionMessage[]): ChatMessage[] {
     }
 
     if (displayContent) {
-      parts.push(message.role === 'assistant' ? assistantTextPart(displayContent) : textPart(displayContent))
+      parts.push(displayRole === 'assistant' ? assistantTextPart(displayContent) : textPart(displayContent))
     }
 
     if (message.role === 'assistant' && Array.isArray(message.tool_calls)) {
@@ -898,8 +984,8 @@ export function toChatMessages(messages: SessionMessage[]): ChatMessage[] {
     }
 
     result.push({
-      id: `${message.timestamp || Date.now()}-${index}-${message.role}`,
-      role: message.role,
+      id: `${message.timestamp || Date.now()}-${index}-${displayRole}`,
+      role: displayRole,
       parts,
       timestamp: message.timestamp
     })
