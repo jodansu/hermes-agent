@@ -196,6 +196,10 @@ class ChatCompletionsTransport(ProviderTransport):
                 break
             tool_calls = msg.get("tool_calls")
             if isinstance(tool_calls, list):
+                # DeepSeek: reject empty tool_calls arrays
+                if not tool_calls:
+                    needs_sanitize = True
+                    break
                 for tc in tool_calls:
                     if isinstance(tc, dict) and (
                         "call_id" in tc
@@ -252,25 +256,30 @@ class ChatCompletionsTransport(ProviderTransport):
 
             tool_calls = msg.get("tool_calls")
             if isinstance(tool_calls, list):
-                copied_tool_calls: list[Any] | None = None
-                for tc_idx, tc in enumerate(tool_calls):
-                    if isinstance(tc, dict):
-                        should_copy_tc = (
-                            "call_id" in tc
-                            or "response_item_id" in tc
-                            or (strip_extra_content and "extra_content" in tc)
-                        )
-                        if should_copy_tc:
-                            if copied_tool_calls is None:
-                                copied_tool_calls = list(tool_calls)
-                            copied_tc = dict(tc)
-                            copied_tc.pop("call_id", None)
-                            copied_tc.pop("response_item_id", None)
-                            if strip_extra_content:
-                                copied_tc.pop("extra_content", None)
-                            copied_tool_calls[tc_idx] = copied_tc
-                if copied_tool_calls is not None:
-                    mutable_msg()["tool_calls"] = copied_tool_calls
+                # DeepSeek: reject empty tool_calls arrays -> remove the key
+                if not tool_calls:
+                    out_msg = mutable_msg()
+                    out_msg.pop("tool_calls", None)
+                else:
+                    copied_tool_calls: list[Any] | None = None
+                    for tc_idx, tc in enumerate(tool_calls):
+                        if isinstance(tc, dict):
+                            should_copy_tc = (
+                                "call_id" in tc
+                                or "response_item_id" in tc
+                                or (strip_extra_content and "extra_content" in tc)
+                            )
+                            if should_copy_tc:
+                                if copied_tool_calls is None:
+                                    copied_tool_calls = list(tool_calls)
+                                copied_tc = dict(tc)
+                                copied_tc.pop("call_id", None)
+                                copied_tc.pop("response_item_id", None)
+                                if strip_extra_content:
+                                    copied_tc.pop("extra_content", None)
+                                copied_tool_calls[tc_idx] = copied_tc
+                    if copied_tool_calls is not None:
+                        mutable_msg()["tool_calls"] = copied_tool_calls
         return sanitized
 
     def convert_tools(self, tools: list[dict[str, Any]]) -> list[dict[str, Any]]:
