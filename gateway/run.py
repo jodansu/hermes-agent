@@ -11168,6 +11168,9 @@ class GatewayRunner(GatewayAuthorizationMixin, GatewayKanbanWatchersMixin, Gatew
             if event.get_command() == "status":
                 return await self._handle_status_command(event)
 
+            if event.get_command() in {"context", "ctx"}:
+                return await self._handle_context_command(event)
+
             # Resolve the command once for all early-intercept checks below.
             from hermes_cli.commands import (
                 ACTIVE_SESSION_BYPASS_COMMANDS as _DEDICATED_HANDLERS,
@@ -11743,6 +11746,9 @@ class GatewayRunner(GatewayAuthorizationMixin, GatewayKanbanWatchersMixin, Gatew
 
             return format_status_text()
 
+        if canonical == "context":
+            return await self._handle_context_command(event)
+
         if canonical == "agents":
             return await self._handle_agents_command(event)
 
@@ -11791,6 +11797,34 @@ class GatewayRunner(GatewayAuthorizationMixin, GatewayKanbanWatchersMixin, Gatew
                 # fall through to agent processing
             except Exception:
                 return "Could not start /learn — please try again."
+
+        if canonical == "init":
+            # /init: rewrite the turn to a guidance-laden prompt and fall
+            # through to normal agent processing (same fall-through as /learn
+            # so role alternation is preserved). The live agent scans the
+            # project with its own read-only tools and writes/updates
+            # AGENTS.md via write_file. No engine, works on any backend.
+            from hermes_cli.init_command import build_init_prompt_for_cwd
+
+            _init_notes = event.get_command_args().strip()
+            try:
+                _init_prompt = build_init_prompt_for_cwd(extra=_init_notes)
+            except Exception:
+                return "Could not start /init — please try again."
+            _ack = (
+                "Updating AGENTS.md from a project scan…"
+                if "UPDATE the existing AGENTS.md" in _init_prompt
+                else "Generating AGENTS.md from a project scan…"
+            )
+            try:
+                adapter = self._adapter_for_source(source)
+                if adapter:
+                    _ack_meta = self._thread_metadata_for_source(source)
+                    await adapter.send(str(source.chat_id), _ack, metadata=_ack_meta)
+            except Exception:
+                logger.debug("init ack send failed", exc_info=True)
+            event.text = _init_prompt
+            # fall through to agent processing
 
         if canonical == "fast":
             return await self._handle_fast_command(event)
@@ -11926,6 +11960,9 @@ class GatewayRunner(GatewayAuthorizationMixin, GatewayKanbanWatchersMixin, Gatew
 
         if canonical == "rollback":
             return await self._handle_rollback_command(event)
+
+        if canonical == "diff":
+            return await self._handle_diff_command(event)
 
         if canonical == "background":
             return await self._handle_background_command(event)
@@ -21849,7 +21886,7 @@ class GatewayRunner(GatewayAuthorizationMixin, GatewayKanbanWatchersMixin, Gatew
             # explaining that no response arrived (so the agent can adapt
             # rather than hang forever).
             # ------------------------------------------------------------------
-            def _clarify_callback_sync(question: str, choices) -> str:
+            def _clarify_callback_sync(question: str, choices, multi_select: bool = False) -> str:
                 from tools import clarify_gateway as _clarify_mod
                 import uuid as _uuid
 
@@ -21862,6 +21899,7 @@ class GatewayRunner(GatewayAuthorizationMixin, GatewayKanbanWatchersMixin, Gatew
                     session_key=session_key or "",
                     question=question,
                     choices=list(choices) if choices else None,
+                    multi_select=bool(multi_select),
                 )
 
                 # Pause typing — like approval, we don't want a "thinking..."
