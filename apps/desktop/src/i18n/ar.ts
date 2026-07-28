@@ -1495,6 +1495,26 @@ export const ar = defineLocale({
     copyUrl: 'نسخ الرابط',
     copyPath: 'نسخ المسار'
   },
+
+  artifactCard: {
+    kind: { code: 'كود', html: 'صفحة تفاعلية', svg: 'رسم' },
+    generating: lines => `جارٍ الإنشاء… ${lines} سطرًا`,
+    versionBadge: count => `${count} إصدارات`,
+    open: 'فتح'
+  },
+
+  artifactPreview: {
+    versionOf: (current, total) => `الإصدار ${current} من ${total}`,
+    olderVersion: 'إصدار أقدم',
+    newerVersion: 'إصدار أحدث',
+    latest: 'الأحدث',
+    copyContent: 'نسخ المحتوى',
+    download: 'تنزيل',
+    openInBrowser: 'فتح في المتصفح',
+    openInBrowserFailed: 'تعذّر الفتح في المتصفح',
+    missingTitle: 'الناتج غير متاح',
+    missingBody: 'لم يعد هذا الناتج موجودًا في السجل المحلي.'
+  },
   sidebar: {
     nav: {
       'new-session': 'جلسة جديدة',
@@ -1523,11 +1543,11 @@ export const ar = defineLocale({
     allPinned: 'كل الجلسات مثبتة',
     shiftClickHint: 'استخدم Shift للتحديد المتعدد',
     noWorkspace: 'بدون مساحة عمل',
-    noProject: 'لا يوجد مشروع',
     projectEmpty: 'لا توجد جلسات بعد',
     noSessions: 'لا توجد جلسات بعد',
     projects: {
       sectionLabel: 'المشاريع',
+      home: 'الرئيسية',
       newButton: 'مشروع جديد',
       createTitle: 'مشروع جديد',
       createDesc: 'سمِّ مساحة العمل وأضف مجلدا أو أكثر.',

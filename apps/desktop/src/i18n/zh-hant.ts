@@ -1569,6 +1569,26 @@ export const zhHant = defineLocale({
     copyPath: '複製路徑'
   },
 
+  artifactCard: {
+    kind: { code: '程式碼', html: '互動頁面', svg: '圖形' },
+    generating: lines => `產生中… ${lines} 行`,
+    versionBadge: count => `${count} 個版本`,
+    open: '開啟'
+  },
+
+  artifactPreview: {
+    versionOf: (current, total) => `第 ${current}/${total} 版`,
+    olderVersion: '較舊版本',
+    newerVersion: '較新版本',
+    latest: '最新',
+    copyContent: '複製內容',
+    download: '下載',
+    openInBrowser: '在瀏覽器中開啟',
+    openInBrowserFailed: '無法在瀏覽器中開啟',
+    missingTitle: '產物無法使用',
+    missingBody: '此產物已不在本機註冊表中。'
+  },
+
   sidebar: {
     nav: {
       'new-session': '新工作階段',
@@ -1593,11 +1613,11 @@ export const zhHant = defineLocale({
     allPinned: '這裡的全部已釘選。取消釘選某個聊天即可在最近中顯示。',
     shiftClickHint: 'Shift + 點擊聊天以釘選 · 拖曳以重新排序',
     noWorkspace: '無工作區',
-    noProject: '無專案',
     projectEmpty: '尚無工作階段',
     noSessions: '尚無工作階段',
     projects: {
       sectionLabel: '專案',
+      home: '主頁',
       newButton: '新增專案',
       createTitle: '新增專案',
       createDesc: '為工作區命名並新增一個或多個資料夾。',

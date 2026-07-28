@@ -257,6 +257,7 @@ export const en: Translations = {
       'view.toggleSidebar': 'Toggle sessions sidebar',
       'view.toggleRightSidebar': 'Toggle file browser',
       'view.toggleReview': 'Toggle review pane',
+      'view.toggleStatusbar': 'Toggle status bar',
       'view.showFiles': 'Show file browser',
       'view.showTerminal': 'Toggle terminal',
       'view.newTerminal': 'New terminal',
@@ -1757,6 +1758,26 @@ export const en: Translations = {
     copyPath: 'Copy path'
   },
 
+  artifactCard: {
+    kind: { code: 'Code', html: 'Interactive page', svg: 'Graphic' },
+    generating: lines => `Generating… ${lines} lines`,
+    versionBadge: count => `${count} versions`,
+    open: 'Open'
+  },
+
+  artifactPreview: {
+    versionOf: (current, total) => `v${current} of ${total}`,
+    olderVersion: 'Older version',
+    newerVersion: 'Newer version',
+    latest: 'Latest',
+    copyContent: 'Copy content',
+    download: 'Download',
+    openInBrowser: 'Open in browser',
+    openInBrowserFailed: 'Could not open in browser',
+    missingTitle: 'Artifact unavailable',
+    missingBody: 'This artifact is no longer in the local registry.'
+  },
+
   sidebar: {
     nav: {
       'new-session': 'New session',
@@ -1781,11 +1802,11 @@ export const en: Translations = {
     allPinned: 'Everything here is pinned. Unpin a chat to show it in recents.',
     shiftClickHint: 'Shift-click a chat to pin',
     noWorkspace: 'No workspace',
-    noProject: 'No project',
     projectEmpty: 'No sessions yet',
     noSessions: 'No sessions yet',
     projects: {
       sectionLabel: 'Projects',
+      home: 'Home',
       newButton: 'New project',
       createTitle: 'New project',
       createDesc: 'Name a workspace and add one or more folders.',
@@ -2404,9 +2425,13 @@ export const en: Translations = {
       gatewayRestarting: 'restarting…',
       gatewayTitle: 'Hermes inference gateway status',
       customizeTitle: 'Show in status bar',
+      hideStatusbar: 'Hide status bar',
       toggleApprovalMode: 'Approvals',
       toggleBackendVersion: 'Backend version',
       toggleCommandCenter: 'Command Center',
+      toggleContextUsage: 'Context meter',
+      toggleRunningTimer: 'Turn timer',
+      toggleSessionTimer: 'Session timer',
       toggleTerminal: 'Terminal',
       toggleVersion: 'Version & updates',
       toggleWorkspace: 'Workspace',

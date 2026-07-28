@@ -252,6 +252,7 @@ export const zh: Translations = {
       'view.toggleSidebar': '切换会话侧边栏',
       'view.toggleRightSidebar': '切换文件浏览器',
       'view.toggleReview': '切换审查面板',
+      'view.toggleStatusbar': '切换状态栏',
       'view.showFiles': '显示文件浏览器',
       'view.showTerminal': '显示终端',
       'view.terminalSelection': '将终端选区发送到输入框',
@@ -1947,6 +1948,26 @@ export const zh: Translations = {
     copyPath: '复制路径'
   },
 
+  artifactCard: {
+    kind: { code: '代码', html: '交互页面', svg: '图形' },
+    generating: lines => `生成中… ${lines} 行`,
+    versionBadge: count => `${count} 个版本`,
+    open: '打开'
+  },
+
+  artifactPreview: {
+    versionOf: (current, total) => `第 ${current}/${total} 版`,
+    olderVersion: '较旧版本',
+    newerVersion: '较新版本',
+    latest: '最新',
+    copyContent: '复制内容',
+    download: '下载',
+    openInBrowser: '在浏览器中打开',
+    openInBrowserFailed: '无法在浏览器中打开',
+    missingTitle: '产物不可用',
+    missingBody: '此产物已不在本地注册表中。'
+  },
+
   sidebar: {
     nav: {
       'new-session': '新建会话',
@@ -1971,11 +1992,11 @@ export const zh: Translations = {
     allPinned: '这里的全部已置顶。取消置顶某个对话即可在最近中显示。',
     shiftClickHint: 'Shift+ 单击对话以置顶 · 拖动以重新排序',
     noWorkspace: '无工作区',
-    noProject: '无项目',
     projectEmpty: '暂无会话',
     noSessions: '暂无会话',
     projects: {
       sectionLabel: '项目',
+      home: '主页',
       newButton: '新建项目',
       createTitle: '新建项目',
       createDesc: '为工作区命名并添加一个或多个文件夹。',
@@ -2580,9 +2601,13 @@ export const zh: Translations = {
       gatewayRestarting: '重启中…',
       gatewayTitle: 'Hermes 推理网关状态',
       customizeTitle: '在状态栏中显示',
+      hideStatusbar: '隐藏状态栏',
       toggleApprovalMode: '审批',
       toggleBackendVersion: '后端版本',
       toggleCommandCenter: '命令中心',
+      toggleContextUsage: '上下文用量',
+      toggleRunningTimer: '回合计时',
+      toggleSessionTimer: '会话计时',
       toggleTerminal: '终端',
       toggleVersion: '版本与更新',
       toggleWorkspace: '工作区',

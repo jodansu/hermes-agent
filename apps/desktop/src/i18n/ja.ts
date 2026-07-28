@@ -1621,6 +1621,26 @@ export const ja = defineLocale({
     copyPath: 'パスをコピー'
   },
 
+  artifactCard: {
+    kind: { code: 'コード', html: 'インタラクティブページ', svg: 'グラフィック' },
+    generating: lines => `生成中… ${lines} 行`,
+    versionBadge: count => `${count} 個のバージョン`,
+    open: '開く'
+  },
+
+  artifactPreview: {
+    versionOf: (current, total) => `${total} 中 v${current}`,
+    olderVersion: '前のバージョン',
+    newerVersion: '次のバージョン',
+    latest: '最新',
+    copyContent: 'コンテンツをコピー',
+    download: 'ダウンロード',
+    openInBrowser: 'ブラウザで開く',
+    openInBrowserFailed: 'ブラウザで開けませんでした',
+    missingTitle: 'アーティファクトを利用できません',
+    missingBody: 'このアーティファクトはローカルレジストリに存在しません。'
+  },
+
   sidebar: {
     nav: {
       'new-session': '新しいセッション',
@@ -1645,11 +1665,11 @@ export const ja = defineLocale({
     allPinned: 'ここにあるものはすべてピン留めされています。チャットのピン留めを解除すると最近のものに表示されます。',
     shiftClickHint: 'Shift クリックでピン留め · ドラッグで並べ替え',
     noWorkspace: 'ワークスペースなし',
-    noProject: 'プロジェクトなし',
     projectEmpty: 'セッションはまだありません',
     noSessions: 'セッションはまだありません',
     projects: {
       sectionLabel: 'プロジェクト',
+      home: 'ホーム',
       newButton: '新規プロジェクト',
       createTitle: '新規プロジェクト',
       createDesc: 'ワークスペースに名前を付け、1つ以上のフォルダを追加します。',
