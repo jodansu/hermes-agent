@@ -2,6 +2,7 @@ import { Tooltip as TooltipPrimitive } from 'radix-ui'
 import * as React from 'react'
 
 import { useI18n } from '@/i18n'
+import { type InputModality, lastInputModality } from '@/lib/input-modality'
 import { useKeybindHint } from '@/lib/keybinds/use-keybind-hint'
 import { cn } from '@/lib/utils'
 
@@ -16,6 +17,11 @@ const HasTooltipProvider = React.createContext(false)
 
 function TooltipProvider({
   delayDuration = 0,
+  // Radix's "skip" grace: after one tip opens, every trigger touched within
+  // this window opens INSTANTLY, delay bypassed. Its 300ms default meant a
+  // cursor sweeping the chrome still flashed a trail of tips despite the
+  // hover delay. Zero it so each tip independently honors `delayDuration`.
+  skipDelayDuration = 0,
   // Tips are labels, not interactive surfaces. Hoverable content + Radix's
   // pointer-grace bridge is what leaves tips stuck open — especially over
   // Electron `-webkit-app-region: drag` chrome where pointermove never fires
@@ -28,6 +34,7 @@ function TooltipProvider({
       data-slot="tooltip-provider"
       delayDuration={delayDuration}
       disableHoverableContent={disableHoverableContent}
+      skipDelayDuration={skipDelayDuration}
       {...props}
     />
   )
@@ -41,17 +48,25 @@ function Tooltip({ ...props }: React.ComponentProps<typeof TooltipPrimitive.Root
 // covers clicks on the trigger itself). Menus and dialogs return focus to
 // their trigger when they close, so "open the model menu, pick a model" left
 // the trigger's tip stuck open over the fresh selection. Gate focus-opens to
-// KEYBOARD focus (:focus-visible): Chromium keeps modality, so a mouse pick's
-// focus restore is suppressed while Tab-focus still shows the tip for a11y.
-// preventDefault doesn't cancel the focus itself — Radix's composed handler
-// just skips its onOpen when the event is defaultPrevented.
-export function suppressNonKeyboardFocusOpen(event: React.FocusEvent<HTMLElement>): void {
-  let keyboardFocus = true
+// KEYBOARD focus so a mouse pick's focus restore is suppressed while Tab-focus
+// still shows the tip for a11y. preventDefault doesn't cancel the focus itself
+// — Radix's composed handler just skips its onOpen when defaultPrevented.
+//
+// `:focus-visible` ALONE is not that gate. Radix menus autofocus their content
+// and keyboard-navigate their items, so Chromium is in keyboard modality by the
+// time a mouse pick restores focus and matches `:focus-visible` — the model
+// pill's tip reopened over every selection. Qualify it with the device behind
+// the last real interaction, which a mouse pick reports as `pointer`.
+export function suppressNonKeyboardFocusOpen(
+  event: React.FocusEvent<HTMLElement>,
+  modality: InputModality = lastInputModality()
+): void {
+  let keyboardFocus = modality === 'keyboard'
 
   try {
-    keyboardFocus = event.currentTarget.matches(':focus-visible')
+    keyboardFocus &&= event.currentTarget.matches(':focus-visible')
   } catch {
-    // Selector unsupported (older jsdom) — keep Radix's default focus-open.
+    // Selector unsupported (older jsdom) — fall back to the modality alone.
   }
 
   if (!keyboardFocus) {
