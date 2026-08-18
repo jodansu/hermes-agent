@@ -118,12 +118,16 @@ MESSAGE_DEDUP_TTL_SECONDS = 300
 def _is_stale_session_ret(
     ret: "Optional[int]", errcode: "Optional[int]", errmsg: "Optional[str]",
 ) -> bool:
-    """True when iLink returns ret=-2 / errcode=-2 with 'unknown error',
-    which is a stale-session signal (same as errcode=-14) rather than
-    a genuine rate limit."""
+    """True when iLink returns ret=-2 / errcode=-2.
+
+    iLink's -2 means "prepare failed" — the session is not ready for
+    *proactive* push (the user hasn't messaged recently), NOT a frequency
+    limit. errmsg is typically "prepare failed" (or "unknown error"). Any
+    -2 is a stale-session signal, never a rate limit."""
     if ret != RATE_LIMIT_ERRCODE and errcode != RATE_LIMIT_ERRCODE:
         return False
-    return (errmsg or "").lower() == "unknown error"
+    msg = (errmsg or "").lower()
+    return msg in {"unknown error", "prepare failed", ""}
 
 
 MEDIA_IMAGE = 1
@@ -1856,31 +1860,12 @@ class WeixinAdapter(BasePlatformAdapter):
                                 self.name, _safe_id(chat_id),
                             )
                             continue
-                        # Rate limit (-2) — backoff and retry
-                        is_rate_limited = (
-                            ret == RATE_LIMIT_ERRCODE
-                            or errcode == RATE_LIMIT_ERRCODE
-                        )
-                        if is_rate_limited:
-                            errmsg = resp.get("errmsg") or resp.get("msg") or "rate limited"
-                            # Record the error so we raise a descriptive
-                            # RuntimeError (instead of AssertionError) if the
-                            # loop exhausts with the server still rate-limiting.
-                            last_error = RuntimeError(
-                                f"iLink sendmessage rate limited: ret={ret} errcode={errcode} errmsg={errmsg}"
-                            )
-                            if self._record_rate_limit_event():
-                                last_error = self._rate_limit_error()
-                                break
-                            if attempt >= self._send_chunk_retries:
-                                break
-                            wait = self._send_chunk_retry_delay_seconds * 3  # 3x backoff for rate limit
-                            logger.warning(
-                                "[%s] rate limited for %s; backing off %.1fs before retry",
-                                self.name, _safe_id(chat_id), wait,
-                            )
-                            await asyncio.sleep(wait)
-                            continue
+                        # NOTE: iLink's -2 means "prepare failed" (session not
+                        # ready), NOT a frequency limit — _is_stale_session_ret
+                        # above already classifies any -2 as a stale-session
+                        # signal. Never treat -2 as a rate limit: opening the
+                        # circuit breaker here masks the real "prepare failed"
+                        # error and blocks all subsequent pushes until cooldown.
                         errmsg = resp.get("errmsg") or resp.get("msg") or "unknown error"
                         raise RuntimeError(
                             f"iLink sendmessage error: ret={ret} errcode={errcode} errmsg={errmsg}"
