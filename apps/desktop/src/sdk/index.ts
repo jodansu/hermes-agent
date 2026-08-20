@@ -65,6 +65,8 @@ import {
   $gatewayState,
   $messages,
   $selectedStoredSessionId,
+  $sessions,
+  rememberedSessionProfile,
   requestSessionResume,
   setResumeExhaustedSessionId
 } from '@/store/session'
@@ -103,6 +105,22 @@ const $focusedBusy = focusedTurnFlag(state => state.busy, PRIMARY_SESSION_VIEW.$
 const $focusedAwaitingResponse = focusedTurnFlag(
   state => state.awaitingResponse,
   PRIMARY_SESSION_VIEW.$awaitingResponse
+)
+
+/**
+ * Owner profile of the FOCUSED chat. The gateway-routing atom
+ * (`$activeGatewayProfile`) answers "which backend is the live socket homed
+ * on" — but tab/tile focus moves without swapping the socket, and a cold
+ * start can restore a route into a session the booting gateway doesn't own.
+ * Any per-bot readout (roster highlight, a bot-scoped panel) must follow the
+ * chat the user is LOOKING AT, so this resolves the focused stored session to
+ * the owner stamped on its session row (the cross-profile aggregator tags
+ * every row) and only falls back to the gateway profile for a draft or an
+ * uncached id — the same ladder the remembered-navigation key and the HUD use.
+ */
+const $focusedSessionProfile = computed(
+  [$focusedStoredSessionId, $sessions, $activeGatewayProfile],
+  (focused, sessions, activeProfile) => normalizeProfileKey(rememberedSessionProfile(sessions, focused, activeProfile))
 )
 
 export interface PluginProfileRoute {
@@ -317,6 +335,11 @@ export const host = {
      *  primary. Prefer this over `activeSessionId` for any readout that
      *  should follow the user between tiles (context, tokens, cost). */
     focusedSessionId: readonlyAtom<null | string>($focusedRuntimeId),
+    /** Owner profile of the focused chat (session-row stamp, falling back to
+     *  the gateway profile for drafts/uncached ids). Prefer this over
+     *  `profile` for any readout keyed to the bot/profile the user is looking
+     *  at — tab focus moves without swapping the gateway socket. */
+    focusedSessionProfile: readonlyAtom<string>($focusedSessionProfile),
     /** Stored (durable) id of the focused session — for navigation and
      *  session-list matching, where runtime ids don't survive reloads. */
     focusedStoredSessionId: readonlyAtom<null | string>($focusedStoredSessionId),
@@ -441,7 +464,10 @@ export const host = {
       throw new Error('This Desktop build has no connection registry. Update Hermes Desktop.')
     }
 
-    return bridge.list()
+    const registryPayload = await bridge.list()
+    const rows = Array.isArray(registryPayload?.connections) ? registryPayload.connections : []
+
+    return rows.map(connection => ({ ...connection, primary: connection.id === registryPayload.primary }))
   },
 
   /** The union agent roster across every registered connection: one row per
@@ -473,6 +499,7 @@ export const host = {
   ensureAgent: async (connectionId: null | string, profile: string): Promise<void> =>
     ensureGatewayAgent(connectionId, (profile ?? '').trim() || 'default'),
 
+  /** Open a stored session — optionally pre-activating its profile first. */
   openSession: async (storedSessionId: string, options: PluginOpenSessionOptions = {}): Promise<void> => {
     const generation = ++openSessionGeneration
     const profile = (options.profile ?? '').trim()
