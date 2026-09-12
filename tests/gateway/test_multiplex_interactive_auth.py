@@ -61,7 +61,10 @@ def _telegram(runner):
     from plugins.platforms.telegram.adapter import TelegramAdapter
 
     tg = object.__new__(TelegramAdapter)
+<<<<<<< HEAD
     tg.platform = Platform.TELEGRAM
+=======
+>>>>>>> origin/main
     tg.config = PlatformConfig(enabled=True, extra={})
     tg._authorization_check = None
     tg._message_handler = runner._primary_message_handler()  # closure, no __self__
@@ -70,6 +73,7 @@ def _telegram(runner):
     return tg
 
 
+<<<<<<< HEAD
 @pytest.mark.parametrize("denied", [False, True])
 @pytest.mark.parametrize("secondary_adapter", [False, True])
 def test_wisdom_callback_checks_command_policy_in_resolved_profile(
@@ -126,6 +130,8 @@ def test_wisdom_callback_cannot_downgrade_to_env_auth(mux_home, failure):
     ) is False
 
 
+=======
+>>>>>>> origin/main
 def test_routed_primary_callback_uses_routed_pairing_store_and_transport_allowlist(mux_home):
     """#86296: shared primary bot + profile_routes → the inline-button caller
     is authorized by the ROUTED profile's pairing store, while env allowlists
@@ -203,12 +209,14 @@ def test_slack_interactive_auth_prefers_wired_profile_check(mux_home, monkeypatc
 def test_authorization_adapter_ignores_per_turn_active_profile(mux_home):
     """#87240 egress half: inside a secondary profile's runtime scope the
     default bot must not be handed to that profile (fail-closed None); the
-    launch profile still resolves ``self.adapters``."""
+    launch profile still resolves ``self.adapters``. The secondary's own bot
+    is down (reconnect pending), so it is not a route-only satellite."""
     from gateway.run import _profile_runtime_scope
 
     runner = _runner(mux_home)
     default_bot = object()
     runner.adapters = {Platform.TELEGRAM: default_bot}
+    runner._profile_failed_platforms = {"secondary": {Platform.TELEGRAM: object()}}
 
     with _profile_runtime_scope(mux_home / "profiles" / "secondary"):
         assert runner._authorization_adapter(Platform.TELEGRAM, profile="secondary") is None

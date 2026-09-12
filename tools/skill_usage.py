@@ -454,6 +454,7 @@ def _mutate_and_emit(skill_name: str, action: str, mutator: Callable[[Dict[str, 
     """``_mutate`` then emit *action* with the mutator's facts as the record — only if the write landed."""
     if isinstance(facts := _mutate(skill_name, mutator), dict):
         _emit_skill_lifecycle(skill_name, action, record=facts, **hook_kwargs)
+<<<<<<< HEAD
         if action not in {"loaded", "patched", "edited", "created"}:
             return
         try:
@@ -468,6 +469,8 @@ def _mutate_and_emit(skill_name: str, action: str, mutator: Callable[[Dict[str, 
                 record_mutation_async(skill_name, task_id=task_id, session_id=session_id)
         except Exception:
             logger.debug("Wisdom qualification failed for %s/%s", skill_name, action, exc_info=True)
+=======
+>>>>>>> origin/main
 
 
 # --- Counter bumps — telemetry for ALL skills regardless of provenance (observability only) ---

@@ -18,7 +18,10 @@ if _repo not in sys.path:
 
 from plugins.platforms.telegram.adapter import TelegramAdapter
 from gateway.config import Platform, PlatformConfig
+<<<<<<< HEAD
 from tests.wisdom.test_native_install_policy import native_install as native_install
+=======
+>>>>>>> origin/main
 
 
 def _make_adapter(extra=None):
@@ -272,6 +275,7 @@ class TestTelegramApprovalCallback:
         assert (tmp_path / ".update_response").read_text() == "y"
 
     @pytest.mark.asyncio
+<<<<<<< HEAD
     async def test_wisdom_update_callback_opens_compatible_review(
         self, monkeypatch, native_install
     ):
@@ -906,6 +910,8 @@ class TestTelegramApprovalCallback:
         assert "Review required" in html and "Browse team skills" in html
 
     @pytest.mark.asyncio
+=======
+>>>>>>> origin/main
     async def test_update_prompt_callback_rejects_unauthorized_user(self, tmp_path):
         """Update prompt buttons should honor TELEGRAM_ALLOWED_USERS."""
         adapter = _make_adapter()
@@ -964,3 +970,7 @@ class TestTelegramApprovalCallback:
         assert runner.last_source is not None
         assert runner.last_source.platform == Platform.TELEGRAM
         assert runner.last_source.user_id == "222"
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main

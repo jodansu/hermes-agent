@@ -19,7 +19,10 @@ const getUsageAnalytics = vi.fn()
 const getProfiles = vi.fn()
 const getSkillContent = vi.fn()
 const getOfficialSkills = vi.fn()
+<<<<<<< HEAD
 const getWisdomEntitlement = vi.fn()
+=======
+>>>>>>> origin/main
 
 // Partial mock: keep the real module (SkillsView pulls in @/store/profile,
 // whose import-time subscription calls setApiRequestProfile) and stub only the
@@ -37,8 +40,12 @@ vi.mock('@/hermes', async importOriginal => ({
   getUsageAnalytics: (days: number, profile?: null | string) => getUsageAnalytics(days, profile),
   getProfiles: () => getProfiles(),
   getSkillContent: (name: string, profile?: null | string) => getSkillContent(name, profile),
+<<<<<<< HEAD
   getOfficialSkills: (profile?: null | string) => getOfficialSkills(profile),
   getWisdomEntitlement: (profile?: null | string) => getWisdomEntitlement(profile)
+=======
+  getOfficialSkills: (profile?: null | string) => getOfficialSkills(profile)
+>>>>>>> origin/main
 }))
 
 // Notifications hit nanostores/timers we don't care about here.
@@ -47,6 +54,7 @@ vi.mock('@/store/notifications', () => ({
   notifyError: vi.fn()
 }))
 
+<<<<<<< HEAD
 // Tab contents have their own suites; this suite owns route-to-panel selection.
 vi.mock('@/components/chat/code-editor', () => ({ CodeEditor: () => null }))
 vi.mock('./collective-tab', () => ({
@@ -56,6 +64,8 @@ vi.mock('./plugins-tab', () => ({
   PluginsTab: () => <section aria-label="Plugins workspace" />
 }))
 
+=======
+>>>>>>> origin/main
 // The catalog Install button routes through the hub action pipeline — stub the
 // action entrypoint (real module kept: SkillsView reads $hubActions and the
 // query keys from it).
@@ -86,26 +96,37 @@ function toolset(overrides: Record<string, unknown> = {}) {
   }
 }
 
+<<<<<<< HEAD
 async function renderSkills(tab = 'toolsets') {
+=======
+async function renderSkills() {
+>>>>>>> origin/main
   const { SkillsView } = await import('./index')
   let result: ReturnType<typeof render>
   await act(async () => {
     result = render(
       // SkillsView reads skills/toolsets via useQuery, so it needs a provider.
       <QueryClientProvider client={queryClient}>
+<<<<<<< HEAD
         <MemoryRouter initialEntries={[`/skills?tab=${tab}`]}>
+=======
+        <MemoryRouter initialEntries={['/skills?tab=toolsets']}>
+>>>>>>> origin/main
           <SkillsView />
         </MemoryRouter>
       </QueryClientProvider>
     )
   })
 
+<<<<<<< HEAD
   if (vi.isFakeTimers()) {
     await act(async () => {
       await vi.advanceTimersByTimeAsync(50)
     })
   }
 
+=======
+>>>>>>> origin/main
   return result!
 }
 
@@ -116,12 +137,15 @@ beforeEach(() => {
   getToolsetConfig.mockResolvedValue({ has_category: true, active_provider: null, providers: [] })
   getUsageAnalytics.mockResolvedValue({ tools: [] })
   getOfficialSkills.mockResolvedValue({ skills: [] })
+<<<<<<< HEAD
   getWisdomEntitlement.mockResolvedValue({
     entitled: true,
     org_id: 'org-1',
     scopes: ['wisdom:read'],
     expires_at: Date.now() / 1000 + 60
   })
+=======
+>>>>>>> origin/main
   getSkillContent.mockResolvedValue({
     name: 'web-research',
     path: '/skills/web-research/SKILL.md',
@@ -134,7 +158,10 @@ beforeEach(() => {
 
 afterEach(() => {
   cleanup()
+<<<<<<< HEAD
   vi.useRealTimers()
+=======
+>>>>>>> origin/main
   vi.clearAllMocks()
   // Shared singleton client — drop cached skills/toolsets so each test refetches.
   queryClient.clear()
@@ -146,6 +173,7 @@ afterEach(() => {
 // (2× in a row on PR #93612, plus a main run the same hour). Give this file
 // headroom; the tests are not slow individually.
 describe('SkillsView toolset management', { timeout: 60_000 }, () => {
+<<<<<<< HEAD
   it.each([
     ['collective', 'Collective workspace', 'Plugins workspace'],
     ['plugins', 'Plugins workspace', 'Collective workspace']
@@ -253,6 +281,8 @@ describe('SkillsView toolset management', { timeout: 60_000 }, () => {
     expect(screen.queryByRole('region', { name: 'Collective workspace' })).toBeNull()
   })
 
+=======
+>>>>>>> origin/main
   it('renders a switch for each toolset and toggles it off', async () => {
     await renderSkills()
 
@@ -414,6 +444,7 @@ describe('SkillsView toolset management', { timeout: 60_000 }, () => {
     expect(await screen.findByText(/Deep research steps/)).toBeTruthy()
   })
 
+<<<<<<< HEAD
   it('uses editorial skill copy while keeping canonical identifiers for actions', async () => {
     getSkills.mockResolvedValue([
       {
@@ -445,6 +476,8 @@ describe('SkillsView toolset management', { timeout: 60_000 }, () => {
     expect(getSkillContent).toHaveBeenCalledWith('web-research', 'default')
   })
 
+=======
+>>>>>>> origin/main
   it('hub picker refuses to reinstall an already-installed skill', async () => {
     const { notify } = await import('@/store/notifications')
     const { EmbeddedHubPicker } = await import('./embedded-hub-picker')

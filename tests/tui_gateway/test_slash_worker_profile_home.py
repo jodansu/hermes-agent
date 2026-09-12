@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 """Tests for TUI gateway slash_worker launch environment."""
 
 import os
+=======
+"""Tests for TUI gateway slash_worker profile_home propagation (#40677)."""
+
+>>>>>>> origin/main
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
@@ -37,6 +42,7 @@ def test_slash_worker_accepts_profile_home():
             assert call_kwargs["env"]["HERMES_HOME"] == "/home/luke/.hermes/profiles/work"
 
 
+<<<<<<< HEAD
 def test_slash_worker_uses_the_parent_hermes_source_tree():
     """A source-backed Desktop must not dispatch through an older install."""
     preserved_user_path = "/tmp/user-pythonpath"
@@ -68,3 +74,5 @@ def test_slash_worker_uses_the_parent_hermes_source_tree():
 
     assert child_pythonpath == [expected_source_root, preserved_user_path]
 
+=======
+>>>>>>> origin/main

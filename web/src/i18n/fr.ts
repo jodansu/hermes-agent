@@ -361,6 +361,7 @@ export const fr: Translations = {
   },
 
   skills: {
+<<<<<<< HEAD
     wisdom: {
       notificationPreferences: {
         title: "Paramètres des notifications",
@@ -482,6 +483,8 @@ export const fr: Translations = {
       acceptSensitive: 'J’accepte explicitement les nouvelles exigences sensibles.',
       preserveModified: 'Conserver d’abord ma copie modifiée comme fork non géré.'
     },
+=======
+>>>>>>> origin/main
     title: "Compétences",
     searchPlaceholder: "Rechercher des compétences et des outils...",
     enabledOf: "{enabled}/{total} activées",

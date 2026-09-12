@@ -436,6 +436,7 @@ export const en: Translations = {
   },
 
   skills: {
+<<<<<<< HEAD
     wisdom: {
       notificationPreferences: {
         title: "Notification settings",
@@ -555,6 +556,8 @@ export const en: Translations = {
       acceptSensitive: 'I explicitly accept the new sensitive requirements.',
       preserveModified: 'Preserve my modified copy as an unmanaged fork first.'
     },
+=======
+>>>>>>> origin/main
     title: "Skills",
     searchPlaceholder: "Search skills and toolsets...",
     enabledOf: "{enabled}/{total} enabled",

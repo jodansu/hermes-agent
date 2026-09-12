@@ -9205,6 +9205,7 @@ def test_complete_slash_returns_plain_string_fields():
         assert isinstance(item["meta"], str), item
 
 
+<<<<<<< HEAD
 def test_complete_slash_returns_documented_wisdom_subcommands(monkeypatch):
     from tests.wisdom.local_auth import authorize_local
     authorize_local(monkeypatch)
@@ -9220,6 +9221,8 @@ def test_complete_slash_returns_documented_wisdom_subcommands(monkeypatch):
     )
 
 
+=======
+>>>>>>> origin/main
 def test_complete_slash_includes_tui_details_command():
     resp = server.handle_request(
         {"id": "1", "method": "complete.slash", "params": {"text": "/det"}}
@@ -11506,8 +11509,12 @@ def test_commands_catalog_has_no_duplicate_or_alias_colliding_names():
     )
 
 
+<<<<<<< HEAD
 def test_commands_catalog_filters_gateway_only_commands_and_keeps_status_visible(monkeypatch):
     monkeypatch.setattr("hermes_wisdom.entitlement.is_entitled", lambda: True)
+=======
+def test_commands_catalog_filters_gateway_only_commands_and_keeps_status_visible():
+>>>>>>> origin/main
     resp = server.handle_request(
         {"id": "1", "method": "commands.catalog", "params": {}}
     )
@@ -11528,19 +11535,26 @@ def test_commands_catalog_filters_gateway_only_commands_and_keeps_status_visible
     assert "/update" in pairs
     assert canon["/update"] == "/update"
 
+<<<<<<< HEAD
     assert "/wisdom" in pairs
     assert canon["/wisdom"] == "/wisdom"
     assert canon["/collective-wisdom-install"] == "/wisdom"
     assert "/collective-wisdom-install" not in pairs
 
+=======
+>>>>>>> origin/main
     assert "/topic" not in canon
     assert "/approve" not in canon
     assert "/deny" not in canon
     assert "/set-home" not in canon
 
 
+<<<<<<< HEAD
 def test_commands_catalog_includes_desktop_meta_without_skills(monkeypatch):
     monkeypatch.setattr("hermes_wisdom.entitlement.is_entitled", lambda: True)
+=======
+def test_commands_catalog_includes_desktop_meta_without_skills():
+>>>>>>> origin/main
     resp = server.handle_request(
         {"id": "1", "method": "commands.catalog", "params": {}}
     )
@@ -11550,12 +11564,16 @@ def test_commands_catalog_includes_desktop_meta_without_skills(monkeypatch):
     assert commands["/clear"]["desktop"] == "terminal"
     assert commands["/model"]["desktop"] == "hidden"
     assert commands["/compact"]["argument_mode"] == commands["/compress"]["argument_mode"]
+<<<<<<< HEAD
     assert commands["/wisdom"] == {"argument_mode": "mixed", "desktop": None}
+=======
+>>>>>>> origin/main
 
     for skill in resp["result"]["skills"]:
         assert skill not in commands
 
 
+<<<<<<< HEAD
 def test_commands_catalog_hides_wisdom_without_local_entitlement(monkeypatch):
     monkeypatch.setattr("hermes_wisdom.entitlement.is_entitled", lambda: False)
 
@@ -11570,6 +11588,8 @@ def test_commands_catalog_hides_wisdom_without_local_entitlement(monkeypatch):
     assert "/collective-wisdom-install" not in result["canon"]
     assert "/wisdom" not in result["sub"]
 
+=======
+>>>>>>> origin/main
 def test_commands_catalog_includes_plugin_commands(monkeypatch):
     monkeypatch.setattr(
         "hermes_cli.plugins.get_plugin_commands",
@@ -18416,6 +18436,7 @@ def test_notification_poller_requeues_when_busy(monkeypatch):
             process_registry.completion_queue.get_nowait()
 
 
+<<<<<<< HEAD
 def test_wisdom_activity_notice_is_profile_throttled_and_session_scoped(
     monkeypatch, tmp_path
 ):
@@ -18514,6 +18535,8 @@ def test_wisdom_activity_notice_defers_while_a_turn_is_busy(monkeypatch):
     assert instantiated == []
 
 
+=======
+>>>>>>> origin/main
 def test_session_save_writes_under_hermes_home_with_system_prompt(monkeypatch, tmp_path):
     """TUI /save (session.save RPC) must snapshot under the Hermes profile
     home — not the project/workspace CWD — and include the system prompt,
@@ -19129,6 +19152,7 @@ def test_slash_exec_concurrent_first_use_spawns_single_worker(monkeypatch):
         server._sessions.pop("race-spawn", None)
 
 
+<<<<<<< HEAD
 def test_slash_exec_wisdom_uses_native_profile_scoped_controller(monkeypatch, tmp_path):
     monkeypatch.setattr("hermes_wisdom.entitlement.is_entitled", lambda: True)
     monkeypatch.setattr("gateway.wisdom_command.require_entitlement", lambda _org_id=None: None)
@@ -19235,6 +19259,8 @@ def test_wisdom_discovery_checks_requested_profile(monkeypatch, tmp_path, entitl
     assert any(item["display"] == "/wisdom" for item in completions) is entitled, completions
 
 
+=======
+>>>>>>> origin/main
 def test_session_close_rpc_claims_then_tears_down(monkeypatch):
     seen = []
     claimed = {"session_key": "k"}

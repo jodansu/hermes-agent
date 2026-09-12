@@ -360,6 +360,7 @@ export const hu: Translations = {
   },
 
   skills: {
+<<<<<<< HEAD
     wisdom: {
       notificationPreferences: {
         title: "Értesítési beállítások",
@@ -480,6 +481,8 @@ export const hu: Translations = {
       acceptSensitive: 'Kifejezetten elfogadom az új érzékeny követelményeket.',
       preserveModified: 'Először őrizze meg a módosított példányomat nem felügyelt elágazásként.'
     },
+=======
+>>>>>>> origin/main
     title: "Készségek",
     searchPlaceholder: "Készségek és eszközkészletek keresése...",
     enabledOf: "{enabled}/{total} engedélyezve",

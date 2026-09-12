@@ -22,6 +22,7 @@ import pytest
 def _install_telegram_mock(monkeypatch: pytest.MonkeyPatch, bot_factory: MagicMock) -> None:
     parse_mode = SimpleNamespace(MARKDOWN_V2="MarkdownV2", HTML="HTML")
     constants_mod = SimpleNamespace(ParseMode=parse_mode)
+<<<<<<< HEAD
 
     class InlineKeyboardButton:
         def __init__(self, text, *, url=None, callback_data=None):
@@ -53,6 +54,11 @@ def _install_telegram_mock(monkeypatch: pytest.MonkeyPatch, bot_factory: MagicMo
         Bot=bot_factory,
         InlineKeyboardButton=InlineKeyboardButton,
         InlineKeyboardMarkup=InlineKeyboardMarkup,
+=======
+    _MessageEntity = lambda **_kw: SimpleNamespace(**_kw)
+    telegram_mod = SimpleNamespace(
+        Bot=bot_factory,
+>>>>>>> origin/main
         MessageEntity=_MessageEntity,
         constants=constants_mod,
     )

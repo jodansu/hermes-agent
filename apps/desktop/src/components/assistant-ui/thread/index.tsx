@@ -9,12 +9,18 @@ import { ThreadTimeline } from '@/components/assistant-ui/thread/timeline'
 import { type RestoreMessageTarget } from '@/components/assistant-ui/thread/types'
 import { UserEditComposer } from '@/components/assistant-ui/thread/user-edit-composer'
 import { UserMessage } from '@/components/assistant-ui/thread/user-message'
+<<<<<<< HEAD
 import { WisdomCandidateCard } from '@/components/assistant-ui/wisdom-candidate-card'
 import { WisdomNoticeCard } from '@/components/assistant-ui/wisdom-notice-card'
 import { Intro, type IntroProps } from '@/components/chat/intro'
 import { ConfirmDialog } from '@/components/ui/confirm-dialog'
 import { WisdomMediationCard } from '@/components/wisdom-mediation-card'
 import type { HermesGateway, ProfileScope } from '@/hermes'
+=======
+import { Intro, type IntroProps } from '@/components/chat/intro'
+import { ConfirmDialog } from '@/components/ui/confirm-dialog'
+import type { HermesGateway } from '@/hermes'
+>>>>>>> origin/main
 import { useI18n } from '@/i18n'
 import { notifyError } from '@/store/notifications'
 
@@ -48,7 +54,10 @@ interface ThreadProps {
   onRestoreToMessage?: (messageId: string, target?: RestoreMessageTarget) => Promise<void> | void
   sessionId?: string | null
   sessionKey?: string | null
+<<<<<<< HEAD
   wisdomProfile?: ProfileScope
+=======
+>>>>>>> origin/main
 }
 
 // memo'd on purpose, and load-bearing for session-switch cost. ChatView
@@ -69,8 +78,12 @@ export const Thread = memo(function Thread({
   onDismissError,
   onRestoreToMessage,
   sessionId = null,
+<<<<<<< HEAD
   sessionKey,
   wisdomProfile
+=======
+  sessionKey
+>>>>>>> origin/main
 }: ThreadProps) {
   const { t } = useI18n()
   const copy = t.assistant.thread
@@ -172,6 +185,7 @@ export const Thread = memo(function Thread({
   // always correct.
   const loadingIndicator = useMemo(() => <BackgroundResumeNotice />, [])
 
+<<<<<<< HEAD
   // Candidate events are written by the Agent against the durable stored
   // session key. Desktop's runtime session id is a short-lived websocket
   // owner and changes whenever a stored conversation is resumed, so polling
@@ -192,11 +206,16 @@ export const Thread = memo(function Thread({
     [wisdomProfile, wisdomSessionId]
   )
 
+=======
+>>>>>>> origin/main
   return (
     <ThreadEditContext.Provider value={editContext}>
       <div className="relative grid h-full min-h-0 max-w-full grid-rows-[minmax(0,1fr)] overflow-hidden bg-transparent contain-[layout_paint]">
         <ThreadMessageList
+<<<<<<< HEAD
           afterContent={wisdomContent}
+=======
+>>>>>>> origin/main
           clampToComposer={clampToComposer}
           components={messageComponents}
           emptyPlaceholder={emptyPlaceholder}

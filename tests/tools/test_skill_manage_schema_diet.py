@@ -54,8 +54,11 @@ class TestSkillManageSchemaDiet(unittest.TestCase):
         # skill_view pointer; the numbered-steps/pitfalls list is gone.
         self.assertIn("57 chars", desc)
         self.assertIn("skill_view()", desc)
+<<<<<<< HEAD
         self.assertIn("metadata.hermes.editorial_name", desc)
         self.assertIn("editorial_description", desc)
+=======
+>>>>>>> origin/main
         self.assertNotIn("numbered steps", desc)
         # Stale action vocabulary must not return.
         self.assertNotIn("edit", self._op_props()["name"]["description"])

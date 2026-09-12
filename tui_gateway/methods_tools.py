@@ -349,8 +349,11 @@ class _Catalog:
 def _catalog_registry(cat: _Catalog) -> None:
     commands = _tools_mod("hermes_cli.commands")
     for cmd in commands.COMMAND_REGISTRY:
+<<<<<<< HEAD
         if not commands.command_available(cmd):
             continue
+=======
+>>>>>>> origin/main
         meta = commands.command_desktop_meta(cmd)
         cat.commands.update({f"/{key}": dict(meta) for key in (cmd.name, *cmd.aliases)})
         if cmd.name in _TUI_HIDDEN or cmd.gateway_only:
@@ -402,7 +405,11 @@ def _catalog_skills(cat: _Catalog, skills: dict[str, dict]) -> None:
         skills[k] = {"usage": usage(name), "origin": origin_of(name)}
 
 
+<<<<<<< HEAD
 @_scoped_rpc("commands.catalog", 5020)
+=======
+@_rpc("commands.catalog", 5020)
+>>>>>>> origin/main
 def _(rid, params: dict) -> dict:
     """Registry-backed slash metadata, categorized, no aliases. Discovery failures land in ``warning``
     (skills' message wins, then quick commands', then plugins')."""
@@ -423,10 +430,14 @@ def _(rid, params: dict) -> dict:
     except Exception as e:
         warning = f"skill discovery unavailable: {e}"
     return _ok(rid, {
+<<<<<<< HEAD
         "pairs": cat.pairs, "sub": {
             k: v[:] for k, v in _tools_mod("hermes_cli.commands").SUBCOMMANDS.items()
             if _tools_mod("hermes_cli.commands").command_available(k)
         },
+=======
+        "pairs": cat.pairs, "sub": {k: v[:] for k, v in _tools_mod("hermes_cli.commands").SUBCOMMANDS.items()},
+>>>>>>> origin/main
         "canon": cat.canon,
         "commands": cat.commands,
         "categories": [{"name": c, "pairs": rows} for c, rows in cat.cat_map.items()],
@@ -452,11 +463,18 @@ def _(rid, params: dict) -> dict:
         env=hermes_subprocess_env(inherit_credentials=True))
 
 
+<<<<<<< HEAD
 @_scoped_rpc("command.resolve", 5012)
 def _(rid, params: dict) -> dict:
     commands = _tools_mod("hermes_cli.commands")
     r = commands.resolve_command(params.get("name", ""))
     if r and commands.command_available(r):
+=======
+@_rpc("command.resolve", 5012)
+def _(rid, params: dict) -> dict:
+    r = _tools_mod("hermes_cli.commands").resolve_command(params.get("name", ""))
+    if r:
+>>>>>>> origin/main
         return _ok(rid, {"canonical": r.name, "description": r.description, "category": r.category})
     return _err(rid, 4011, f"unknown command: {params.get('name')}")
 
@@ -803,12 +821,15 @@ def _(rid, params: dict) -> dict:
     name, arg = _resolve_name(params.get("name", "").lstrip("/")), params.get("arg", "")
     session = _sessions.get(params.get("session_id", ""))
 
+<<<<<<< HEAD
     commands = _tools_mod("hermes_cli.commands")
     command = commands.resolve_command(name)
     with _session_profile_runtime_scope(session or {}):
         if command is not None and not commands.command_available(command):
             return _err(rid, 4030, f"command unavailable: /{name}")
 
+=======
+>>>>>>> origin/main
     # Stage order is load-bearing: quick > plugin > bundle > skill > built-in.
     stages = (_dispatch_quick, _dispatch_plugin, _dispatch_bundle, _dispatch_skill, _SLASH_BUILTINS.get(name))
     for stage in filter(None, stages):
@@ -833,11 +854,14 @@ def _(rid, params: dict) -> dict:
     parts = cmd.lstrip("/").split(maxsplit=1)
     base = (parts[0] if parts else "").lower()
     arg = parts[1] if len(parts) > 1 else ""
+<<<<<<< HEAD
     commands = _tools_mod("hermes_cli.commands")
     command = commands.resolve_command(base)
     with _session_profile_runtime_scope(session):
         if command is not None and not commands.command_available(command):
             return _err(rid, 4030, f"command unavailable: /{base}")
+=======
+>>>>>>> origin/main
     sid = params.get("session_id", "")
     live_output = _live_slash_command_output(sid, session, base, arg)
     if live_output is not None:
@@ -887,13 +911,16 @@ def _(rid, params: dict) -> dict:
 
 
 # ─── Insights / rollback / browser / config ──────────────────────────────────
-@_rpc("insights.get", 5017)
+@_scoped_rpc("insights.get", 5017)
 def _(rid, params: dict) -> dict:
     days = params.get("days", 30)
-    if (db := _get_db()) is None:
-        return _db_unavailable_error(rid, code=5017)
-    cutoff = time.time() - days * 86400
-    rows = [s for s in db.list_sessions_rich(limit=500, compact_rows=True) if (s.get("started_at") or 0) >= cutoff]
+    # ``profile`` selects that profile's store; the launch handle is never the fallback for a
+    # scoped call (a foreign first touch used to pin the process-wide handle, #102526).
+    with _profile_db(params) as db:
+        if db is None:
+            return _db_unavailable_error(rid, code=5017)
+        cutoff = time.time() - days * 86400
+        rows = [s for s in db.list_sessions_rich(limit=500, compact_rows=True) if (s.get("started_at") or 0) >= cutoff]
     return _ok(rid, {"days": days, "sessions": len(rows), "messages": sum(s.get("message_count", 0) for s in rows)})
 
 

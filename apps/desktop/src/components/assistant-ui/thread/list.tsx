@@ -17,11 +17,14 @@ import {
 } from 'react'
 import { type GetTargetScrollTop, useStickToBottom } from 'use-stick-to-bottom'
 
+<<<<<<< HEAD
 import {
   $chatOnboardingSolo,
   $chatOnboardingThreadIds,
   $onboardingGreeting
 } from '@/components/onboarding-chat/assembly'
+=======
+>>>>>>> origin/main
 import { usePaneLifecycle, usePaneVisible } from '@/components/pane-shell/pane-visibility'
 import { useI18n } from '@/i18n'
 import { messagePaintWeight } from '@/lib/render-weight'
@@ -47,6 +50,7 @@ import { MessageRenderBoundary } from '../message-render-boundary'
 
 import { resolveShowEarlierAction, shouldAutoShowEarlier, useTranscriptWindow } from './transcript-window'
 import { useMessagesBelow } from './use-messages-below'
+import { useStickyPromptClip } from './use-sticky-prompt-clip'
 
 type ThreadMessageComponents = ComponentProps<typeof ThreadPrimitive.MessageByIndex>['components']
 
@@ -168,6 +172,7 @@ export function shouldRePinOnTranscriptReload(opts: { sessionSwitched: boolean; 
   return opts.sessionSwitched || !opts.settledNonEmpty
 }
 
+<<<<<<< HEAD
 /** The greeting types once per app run. The row starts on the pre-session
  *  draft and MOUNTS AGAIN when the seeded session replaces it (new thread key)
  *  — replaying the animation there would read as the agent stuttering its own
@@ -229,6 +234,8 @@ function OnboardingGreetingRow({ text }: { text: string }) {
   )
 }
 
+=======
+>>>>>>> origin/main
 export function subscribeToThreadForeground(shouldReanchor: () => boolean, onReanchor: () => void): () => void {
   let frameId: number | null = null
   let framePending = false
@@ -273,7 +280,10 @@ export function subscribeToThreadForeground(shouldReanchor: () => boolean, onRea
 }
 
 interface ThreadMessageListProps {
+<<<<<<< HEAD
   afterContent?: ReactNode
+=======
+>>>>>>> origin/main
   clampToComposer: boolean
   components: ThreadMessageComponents
   emptyPlaceholder?: ReactNode
@@ -464,6 +474,7 @@ const TurnRow = memo(function TurnRow({ components, group, resetKey, virtualized
   )
 })
 
+<<<<<<< HEAD
 function useOnboardingTranscript(structuralSignature: string, sessionKey: string | null | undefined) {
   const onboardingThreadIds = useStore($chatOnboardingThreadIds)
   const onboardingGreeting = useStore($onboardingGreeting)
@@ -511,6 +522,9 @@ function useOnboardingTranscript(structuralSignature: string, sessionKey: string
 
 const ThreadMessageListInner: FC<ThreadMessageListProps> = ({
   afterContent,
+=======
+const ThreadMessageListInner: FC<ThreadMessageListProps> = ({
+>>>>>>> origin/main
   clampToComposer,
   components,
   emptyPlaceholder,
@@ -535,6 +549,7 @@ const ThreadMessageListInner: FC<ThreadMessageListProps> = ({
   )
 
   const { t } = useI18n()
+<<<<<<< HEAD
 
   // Row structure is memoized on the STRUCTURAL signature only, so streaming
   // part-appends can't churn group identity (that would defeat the rows memo
@@ -542,6 +557,13 @@ const ThreadMessageListInner: FC<ThreadMessageListProps> = ({
   const { groups, onboardingThread, threadType, greetingRow } = useOnboardingTranscript(structuralSignature, sessionKey)
 
   const renderEmpty = groups.length === 0 && Boolean(emptyPlaceholder) && !onboardingThread
+=======
+  // Row structure is memoized on the STRUCTURAL signature only, so streaming
+  // part-appends can't churn group identity (that would defeat the rows memo
+  // below on every tick). Weights are folded in separately for the budget.
+  const groups = useMemo(() => buildGroups(structuralSignature), [structuralSignature])
+  const renderEmpty = groups.length === 0 && Boolean(emptyPlaceholder)
+>>>>>>> origin/main
 
   // use-stick-to-bottom owns scrollTop (single writer): follow while locked,
   // escape on user scroll-up, re-lock at bottom. Snap instantly, not spring — a
@@ -1145,6 +1167,7 @@ const ThreadMessageListInner: FC<ThreadMessageListProps> = ({
   )
 
   useMessagesBelow({ contentRef, scrollRef, isAtBottom, paneVisible, rows, sessionKey })
+  useStickyPromptClip({ contentRef, scrollRef, paneVisible, rows })
 
   return (
     <div
@@ -1184,7 +1207,10 @@ const ThreadMessageListInner: FC<ThreadMessageListProps> = ({
           <div
             className={cn('mx-auto flex w-full max-w-(--composer-width) min-w-0 flex-col px-6', threadContentTopPad)}
             data-slot="aui_thread-content"
+<<<<<<< HEAD
             data-thread-type={threadType}
+=======
+>>>>>>> origin/main
             ref={contentRef as React.RefCallback<HTMLDivElement>}
           >
             {(hiddenCount > 0 || olderAvailable) && (
@@ -1196,10 +1222,15 @@ const ThreadMessageListInner: FC<ThreadMessageListProps> = ({
                 {t.assistant.thread.showEarlier}
               </button>
             )}
+<<<<<<< HEAD
             {greetingRow}
             {rows}
             {loadingIndicator}
             {afterContent}
+=======
+            {rows}
+            {loadingIndicator}
+>>>>>>> origin/main
             {clampToComposer && (
               <div
                 aria-hidden="true"

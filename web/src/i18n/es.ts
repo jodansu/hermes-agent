@@ -361,6 +361,7 @@ export const es: Translations = {
   },
 
   skills: {
+<<<<<<< HEAD
     wisdom: {
       notificationPreferences: {
         title: "Ajustes de notificaciones",
@@ -483,6 +484,8 @@ export const es: Translations = {
       acceptSensitive: 'Acepto expresamente los nuevos requisitos sensibles.',
       preserveModified: 'Conservar primero mi copia modificada como una bifurcación no gestionada.'
     },
+=======
+>>>>>>> origin/main
     title: "Habilidades",
     searchPlaceholder: "Buscar habilidades y conjuntos de herramientas...",
     enabledOf: "{enabled}/{total} habilitados",

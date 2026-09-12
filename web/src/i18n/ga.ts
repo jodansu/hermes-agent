@@ -368,6 +368,7 @@ export const ga: Translations = {
   },
 
   skills: {
+<<<<<<< HEAD
     wisdom: {
       notificationPreferences: {
         title: "Socruithe fógraí",
@@ -490,6 +491,8 @@ export const ga: Translations = {
       acceptSensitive: 'Glacaim go sainráite leis na riachtanais íogaire nua.',
       preserveModified: 'Caomhnaigh mo chóip leasaithe mar fhorc neamhbhainistithe ar dtús.'
     },
+=======
+>>>>>>> origin/main
     title: "Scileanna",
     searchPlaceholder: "Cuardaigh scileanna agus toolsets...",
     enabledOf: "{enabled}/{total} cumasaithe",

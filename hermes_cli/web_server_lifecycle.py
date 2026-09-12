@@ -195,6 +195,7 @@ def _eager_reconcile_own_session_db() -> None:
         )
 
 
+<<<<<<< HEAD
 async def _wisdom_checker_loop(interval: int = 300) -> None:
     """Run pending reviews and reconcile the typed feed off the request loop."""
     while True:
@@ -219,6 +220,8 @@ async def _wisdom_checker_loop(interval: int = 300) -> None:
         await asyncio.sleep(interval)
 
 
+=======
+>>>>>>> origin/main
 def _read_bound_port(server: "uvicorn.Server", fallback: int) -> int:
     """Read the OS-assigned port from the live uvicorn socket (ephemeral port-0 discovery)."""
     if server.servers and server.servers[0].sockets:

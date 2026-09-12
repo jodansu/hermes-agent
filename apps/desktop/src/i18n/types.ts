@@ -5,12 +5,16 @@
 // partial locales should use `defineLocale()` so missing desktop-only strings
 // fall back to English while new keys remain type-checked.
 
+<<<<<<< HEAD
 import type { WisdomMuteCopy, WisdomSyncCopy } from '@hermes/shared'
 
+=======
+>>>>>>> origin/main
 import type { TipId } from '@/lib/tips/catalog'
 
 export type Locale = 'en' | 'zh' | 'zh-hant' | 'ja' | 'ar' | 'ru'
 
+<<<<<<< HEAD
 export interface WisdomTranslations {
   syncRecovery?: WisdomSyncCopy
   notificationPreferences: WisdomMuteCopy
@@ -177,6 +181,8 @@ export interface WisdomTranslations {
   markSeen: string
 }
 
+=======
+>>>>>>> origin/main
 export type ToolTitleKey =
   | 'browser_click'
   | 'browser_fill'
@@ -1308,6 +1314,9 @@ export interface Translations {
       /** Recommended-badge tooltip by resolver branch; unknown keys (newer
        *  backend) simply show no tooltip. */
       recommendedReason: Record<string, string>
+      noRecommendationTitle: string
+      noRecommendationDetail: string
+      noRecommendationAction: string
       downloaded: string
       downloadAction: (size: string) => string
       downloadProgress: (done: string, total: string) => string
@@ -1542,16 +1551,25 @@ export interface Translations {
   }
 
   skills: {
+<<<<<<< HEAD
     collective: WisdomTranslations
+=======
+>>>>>>> origin/main
     tabSkills: string
     tabToolsets: string
     configuringProfile: string
     tabMcp: string
+<<<<<<< HEAD
     tabCollective: string
     all: string
     searchSkills: string
     searchToolsets: string
     searchCollective: string
+=======
+    all: string
+    searchSkills: string
+    searchToolsets: string
+>>>>>>> origin/main
     refresh: string
     refreshing: string
     loading: string

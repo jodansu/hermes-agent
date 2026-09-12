@@ -1115,6 +1115,7 @@ export const ar = defineLocale({
     }
   },
   skills: {
+<<<<<<< HEAD
     collective: {
       notificationPreferences: {
         title: 'إعدادات الإشعارات',
@@ -1286,6 +1287,8 @@ export const ar = defineLocale({
     },
     tabCollective: 'المعرفة الجماعية',
     searchCollective: 'البحث في المعرفة الجماعية...',
+=======
+>>>>>>> origin/main
     tabSkills: 'المهارات',
     tabToolsets: 'مجموعات الأدوات',
     all: 'الكل',

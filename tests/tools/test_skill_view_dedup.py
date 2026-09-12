@@ -4,7 +4,10 @@ import json
 import os
 import time
 from pathlib import Path
+<<<<<<< HEAD
 from unittest.mock import patch
+=======
+>>>>>>> origin/main
 
 import pytest
 
@@ -46,17 +49,23 @@ class TestSkillViewDedup:
         assert "Step one" in r.get("content", "")
 
     def test_repeat_view_returns_stub(self, skills_home):
+<<<<<<< HEAD
         with (
             patch("tools.skill_usage.bump_view") as bump_view,
             patch("tools.skill_usage.bump_use") as bump_use,
         ):
             _view("demo-dedup-skill")
             r2 = _view("demo-dedup-skill")
+=======
+        _view("demo-dedup-skill")
+        r2 = _view("demo-dedup-skill")
+>>>>>>> origin/main
         assert r2["success"] is True
         assert r2.get("dedup") is True
         assert r2.get("content_returned") is False
         assert "unchanged" in r2["message"]
         assert "content" not in r2
+<<<<<<< HEAD
         assert bump_view.call_count == 2
         assert bump_use.call_count == 2
         bump_use.assert_called_with(
@@ -64,6 +73,8 @@ class TestSkillViewDedup:
             task_id="t-svd",
             session_id=None,
         )
+=======
+>>>>>>> origin/main
 
     def test_modified_skill_returns_full_content(self, skills_home):
         _view("demo-dedup-skill")

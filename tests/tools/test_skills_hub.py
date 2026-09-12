@@ -841,6 +841,7 @@ class TestOptionalSkillSourceMetadata:
         skill_dir = optional_root / "finance" / "3-statement-model"
         skill_dir.mkdir(parents=True)
         (skill_dir / "SKILL.md").write_text(
+<<<<<<< HEAD
             "---\n"
             "name: 3-statement-model\n"
             "description: test\n"
@@ -849,6 +850,9 @@ class TestOptionalSkillSourceMetadata:
             "    editorial_name: Three-Statement Model\n"
             "    editorial_description: Build a linked financial model.\n"
             "---\n\nBody\n",
+=======
+            "---\nname: 3-statement-model\ndescription: test\n---\n\nBody\n",
+>>>>>>> origin/main
             encoding="utf-8",
         )
 
@@ -860,8 +864,11 @@ class TestOptionalSkillSourceMetadata:
         assert meta is not None
         assert meta.repo == "NousResearch/hermes-agent"
         assert meta.path == "optional-skills/finance/3-statement-model"
+<<<<<<< HEAD
         assert meta.editorial_name == "Three-Statement Model"
         assert meta.editorial_description == "Build a linked financial model."
+=======
+>>>>>>> origin/main
 
     def test_scan_all_accepts_install_prefix_but_rejects_nested_support_skills(self, tmp_path):
         optional_root = tmp_path / "venv" / "lib" / "site-packages" / "optional-skills"

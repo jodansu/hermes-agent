@@ -262,6 +262,10 @@ import {
 } from './managed-ssh-update'
 import { registerMcpOauthCallbackIpc } from './mcp-oauth-callback-ipc'
 import { createMediaProtocolHandler, MEDIA_PROTOCOL } from './media-protocol'
+<<<<<<< HEAD
+=======
+import { fetchLocalMedia } from './media-range'
+>>>>>>> origin/main
 import { createNativeAccessTokenCoordinator, NativeAuthChangedError } from './native-access-token'
 import { oauthSessionIsLive, resolveJsonBody, resolveReadinessProbeAuth } from './native-auth-decisions'
 import {
@@ -1366,6 +1370,7 @@ protocol.registerSchemesAsPrivileged([
 function registerMediaProtocol() {
   const handler = createMediaProtocolHandler({
     ensureRemoteBearer: baseUrl => ensureNativeAccessToken(baseUrl),
+<<<<<<< HEAD
     fetchLocal: (resolvedPath, headers, method) =>
       electronNet.fetch(pathToFileURL(resolvedPath).toString(), {
         bypassCustomProtocolHandlers: true,
@@ -1373,6 +1378,12 @@ function registerMediaProtocol() {
         headers,
         method
       }),
+=======
+    // Answer local files ourselves: Electron's file:// loader ignores Range and
+    // returns the whole body as 200 without Accept-Ranges, which makes <video>
+    // unseekable (seekable=[0,0]).
+    fetchLocal: fetchLocalMedia,
+>>>>>>> origin/main
     fetchRemote: (url, headers, method) =>
       electronNet.fetch(url, {
         bypassCustomProtocolHandlers: true,

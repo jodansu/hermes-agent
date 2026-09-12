@@ -9,8 +9,12 @@ from __future__ import annotations
 
 import logging
 import re
+<<<<<<< HEAD
 from dataclasses import dataclass, field
 from typing import Mapping
+=======
+from dataclasses import dataclass
+>>>>>>> origin/main
 
 from utils import is_truthy_value
 from hermes_constants import INDICATOR_STYLES
@@ -42,15 +46,19 @@ class CommandDef:
     argument_mode: str | None = None  # desktop composer: options|text|mixed; None inferred
     # Desktop availability: None = offered; "hidden" = runs but out of the popover; else a reason.
     desktop: str | None = None
+<<<<<<< HEAD
     # Optional help copy for static subcommands. Completion surfaces display it
     # beside the subcommand name; callers that only understand ``subcommands``
     # continue to receive the existing flat tuple.
     subcommand_descriptions: Mapping[str, str] = field(default_factory=dict)
+=======
+>>>>>>> origin/main
 
 
 VALID_BUSY_POLICIES: frozenset[str] = frozenset({"dispatch", "reject", "interrupt_then_dispatch"})
 
 
+<<<<<<< HEAD
 WISDOM_SUBCOMMAND_HELP: dict[str, str] = {
     "setup": "Configure this profile for Collective Wisdom",
     "status": "Show account, organization, setup, and Gateway health",
@@ -78,6 +86,8 @@ WISDOM_SUBCOMMAND_HELP: dict[str, str] = {
 # ---------------------------------------------------------------------------
 # Central registry -- single source of truth
 # ---------------------------------------------------------------------------
+=======
+>>>>>>> origin/main
 COMMAND_REGISTRY: list[CommandDef] = [
     # Session
     CommandDef("start", "Acknowledge platform start pings without a reply", "Session",
@@ -249,6 +259,7 @@ COMMAND_REGISTRY: list[CommandDef] = [
                subcommands=("search", "browse", "inspect", "install", "audit",
                             "pending", "approve", "reject", "diff", "approval"),
                desktop="settings"),
+<<<<<<< HEAD
     CommandDef(
         "wisdom",
         "Browse, contribute, install, and manage Collective Wisdom skills",
@@ -260,6 +271,8 @@ COMMAND_REGISTRY: list[CommandDef] = [
         busy_policy="reject",
         argument_mode="mixed",
     ),
+=======
+>>>>>>> origin/main
     CommandDef("memory", "Review pending memory writes / toggle the approval gate",
                "Tools & Skills", args_hint="[pending|approve|reject|approval] [id|on|off]",
                subcommands=("pending", "approve", "reject", "approval")),
@@ -378,6 +391,7 @@ def resolve_command(name: str) -> CommandDef | None:
     return _COMMAND_LOOKUP.get(name.lower().lstrip("/"))
 
 
+<<<<<<< HEAD
 def command_available(command: CommandDef | str) -> bool:
     """Return whether a registry command may be presented or dispatched locally.
 
@@ -397,6 +411,8 @@ def command_available(command: CommandDef | str) -> bool:
         return False
 
 
+=======
+>>>>>>> origin/main
 def _build_description(cmd: CommandDef) -> str:
     """CLI-facing description including the usage hint."""
     if not cmd.args_hint:
@@ -411,10 +427,13 @@ COMMANDS_BY_CATEGORY: dict[str, dict[str, str]] = {}
 # registry order), then pipe patterns in args_hint ("[on|off|status]") as fallback.
 SUBCOMMANDS: dict[str, list[str]] = {
     f"/{_cmd.name}": list(_cmd.subcommands) for _cmd in COMMAND_REGISTRY if _cmd.subcommands}
+<<<<<<< HEAD
 SUBCOMMAND_DESCRIPTIONS: dict[str, dict[str, str]] = {
     f"/{cmd.name}": {sub: str(cmd.subcommand_descriptions.get(sub) or "") for sub in cmd.subcommands}
     for cmd in COMMAND_REGISTRY if cmd.subcommands
 }
+=======
+>>>>>>> origin/main
 for _cmd in COMMAND_REGISTRY:
     if _cmd.gateway_only:
         continue
@@ -499,10 +518,14 @@ def _resolve_config_gates() -> set[str]:
 
 def _is_gateway_available(cmd: CommandDef, config_overrides: set[str] | None = None) -> bool:
     """Not ``cli_only``, or its config gate is truthy (*config_overrides* from
+<<<<<<< HEAD
     ``_resolve_config_gates()`` avoids re-reading config per command), and passes
     any refresh-free account entitlement gate."""
     if not command_available(cmd):
         return False
+=======
+    ``_resolve_config_gates()`` avoids re-reading config per command)."""
+>>>>>>> origin/main
     if not cmd.cli_only:
         return True
     if not cmd.gateway_config_gate:

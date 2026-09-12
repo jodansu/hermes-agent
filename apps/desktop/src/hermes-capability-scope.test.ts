@@ -7,16 +7,25 @@ import {
   getSkills,
   getToolsets,
   getUsageAnalytics,
+<<<<<<< HEAD
   getWisdomStatus,
   installSkillFromHub,
   profileScopeKey,
   reviseWisdomDraft,
+=======
+  installSkillFromHub,
+  profileScopeKey,
+>>>>>>> origin/main
   saveMcpServers,
   setApiRequestConnection,
   setApiRequestProfile,
   setSkillEnabled,
+<<<<<<< HEAD
   setToolsetEnabled,
   suggestWisdomSkill
+=======
+  setToolsetEnabled
+>>>>>>> origin/main
 } from './hermes'
 
 // Contract: the Capabilities surface (skills / toolsets / MCP / hub / config)
@@ -85,6 +94,7 @@ describe('capability helpers are connection-scoped', () => {
     void setToolsetEnabled('browser', true, { connectionId: 'homelab', profile: 'inbox-bot' })
     void saveMcpServers({}, { connectionId: 'homelab', profile: 'inbox-bot' })
     void installSkillFromHub('official/research/arxiv', { connectionId: 'homelab', profile: 'inbox-bot' })
+<<<<<<< HEAD
     void getWisdomStatus({ connectionId: 'homelab', profile: 'inbox-bot' })
     void suggestWisdomSkill(
       'local-skill',
@@ -106,6 +116,8 @@ describe('capability helpers are connection-scoped', () => {
       },
       { connectionId: 'homelab', profile: 'inbox-bot' }
     )
+=======
+>>>>>>> origin/main
 
     for (const call of api.mock.calls) {
       expect((call[0] as { connectionId?: string }).connectionId).toBe('homelab')
@@ -113,6 +125,7 @@ describe('capability helpers are connection-scoped', () => {
     }
   })
 
+<<<<<<< HEAD
   it('keeps local candidate evidence out of Wisdom mutation bodies', () => {
     void suggestWisdomSkill(
       'local-skill',
@@ -138,6 +151,8 @@ describe('capability helpers are connection-scoped', () => {
     expect(JSON.stringify(api.mock.calls.at(-1)?.[0])).not.toMatch(/usage|refinement|candidate|ranking|stability/)
   })
 
+=======
+>>>>>>> origin/main
   it("a 'local' pin carries an explicit connectionId even while a remote gateway is active", () => {
     setApiRequestProfile('research')
     setApiRequestConnection('gw-tailscale')

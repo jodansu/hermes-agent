@@ -5,7 +5,13 @@ from __future__ import annotations
 import math
 from typing import Any, Dict, List, Literal, Optional
 
+<<<<<<< HEAD
 from pydantic import BaseModel, Field, SecretStr, StrictBool, field_validator
+=======
+from pydantic import BaseModel, SecretStr, StrictBool, field_validator
+
+
+>>>>>>> origin/main
 class ConfigUpdate(BaseModel):
     config: dict
     profile: Optional[str] = None
@@ -92,7 +98,10 @@ class ModelAssignment(BaseModel):
     scope="main" → model.provider + model.default; scope="auxiliary" → auxiliary.<task>.*
     (task="" = every auxiliary slot, task="__reset__" = reset every slot to provider="auto").
     """
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/main
     scope: str
     provider: str
     model: str
@@ -198,6 +207,10 @@ class GitBranchSwitchBody(BaseModel):
 
 class CuratorPause(BaseModel):
     paused: bool
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
 class LearningNodeRef(BaseModel):
     id: str
     profile: Optional[str] = None
@@ -207,6 +220,7 @@ class LearningNodeEdit(BaseModel):
     content: str
     profile: Optional[str] = None
 
+<<<<<<< HEAD
 
 class WisdomSuggestRequest(BaseModel):
     skill: Optional[str] = None
@@ -343,12 +357,17 @@ class WisdomMutePrepareRequest(BaseModel):
 class WisdomMuteChooseRequest(WisdomMutePrepareRequest):
     control_id: str = Field(pattern=r"^[a-f0-9]{32}$")
     duration: Optional[Literal["1_day", "1_week", "30_days", "forever"]]
+=======
+>>>>>>> origin/main
 class DebugShareRequest(BaseModel):
     # Redaction scrubs credential-shaped tokens before logs leave the machine; opt-out only.
     redact: bool = True
     lines: int = 200  # recent log lines in the summary tail (full logs are separate)
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/main
 class TTSSpeakRequest(BaseModel):
     text: str
 
@@ -436,7 +455,10 @@ class AutomationBlueprintInstantiate(BaseModel):
     blueprint: str  # blueprint key, e.g. "morning-brief"
     values: Dict[str, Any] = {}  # filled slot values from the form
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/main
 class MCPServerCreate(BaseModel):
     name: str
     url: Optional[str] = None
@@ -486,7 +508,10 @@ class WebhookCreate(BaseModel):
     deliver_chat_id: Optional[str] = None
     secret: Optional[str] = None  # omit to auto-generate
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/main
 class WebhookEnabledToggle(BaseModel):
     enabled: bool
 
@@ -501,11 +526,17 @@ class MemoryProviderSelect(BaseModel):
 class MemoryReset(BaseModel):
     target: str = "all"  # "all" | "memory" | "user"
 
+<<<<<<< HEAD
 
 class BackupRequest(BaseModel):
     output: Optional[str] = None  # defaults to a timestamped zip in the home dir
 
 
+=======
+class BackupRequest(BaseModel):
+    output: Optional[str] = None  # defaults to a timestamped zip in the home dir
+
+>>>>>>> origin/main
 class ImportRequest(BaseModel):
     archive: str
     # --force: the spawned `hermes import` has stdin=DEVNULL, so its "Continue? [y/N]" prompt would
@@ -534,6 +565,10 @@ class SkillUninstallRequest(BaseModel):
 
 class SkillsUpdateRequest(BaseModel):
     profile: Optional[str] = None
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
 class ProfileCreate(BaseModel):
     name: str
     clone_from: Optional[str] = None
@@ -629,6 +664,10 @@ class ThemeSetBody(BaseModel):
 
 class FontSetBody(BaseModel):
     font: str
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
 class _AgentPluginInstallBody(BaseModel):
     identifier: str
     force: bool = False
@@ -644,3 +683,7 @@ class _PluginProvidersPutBody(BaseModel):
 
 class _PluginVisibilityBody(BaseModel):
     hidden: bool
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main

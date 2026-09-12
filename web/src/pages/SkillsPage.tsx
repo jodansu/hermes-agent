@@ -42,7 +42,10 @@ import type {
 import { useProfileScope } from "@/contexts/useProfileScope";
 import { ToolsetConfigDrawer } from "@/components/ToolsetConfigDrawer";
 import { SkillEditorDialog } from "@/components/SkillEditorDialog";
+<<<<<<< HEAD
 import { CollectiveWisdomPanel } from "@/components/CollectiveWisdomPanel";
+=======
+>>>>>>> origin/main
 import { useToast } from "@nous-research/ui/hooks/use-toast";
 import { Toast } from "@nous-research/ui/ui/components/toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@nous-research/ui/ui/components/card";
@@ -122,6 +125,7 @@ function toolsetIcon(
   return Wrench;
 }
 
+<<<<<<< HEAD
 type SkillPresentation = {
   name: string;
   description: string;
@@ -135,6 +139,8 @@ const skillDisplayName = (skill: SkillPresentation) =>
 const skillDisplayDescription = (skill: SkillPresentation) =>
   skill.editorial_description?.trim() || skill.description;
 
+=======
+>>>>>>> origin/main
 /* ------------------------------------------------------------------ */
 /*  Component                                                          */
 /* ------------------------------------------------------------------ */
@@ -143,6 +149,7 @@ export default function SkillsPage() {
   const [skills, setSkills] = useState<SkillInfo[]>([]);
   const [toolsets, setToolsets] = useState<ToolsetInfo[]>([]);
   const [loading, setLoading] = useState(true);
+<<<<<<< HEAD
   // Keep the response profile-keyed so a profile switch fails closed before
   // its first request settles. Positive responses are also bounded by exp.
   const [wisdomEntitlement, setWisdomEntitlement] = useState<{
@@ -152,6 +159,10 @@ export default function SkillsPage() {
   } | null>(null);
   const [search, setSearch] = useState("");
   const [view, setView] = useState<"skills" | "toolsets" | "hub" | "collective">("skills");
+=======
+  const [search, setSearch] = useState("");
+  const [view, setView] = useState<"skills" | "toolsets" | "hub">("skills");
+>>>>>>> origin/main
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [togglingSkills, setTogglingSkills] = useState<Set<string>>(new Set());
   const [configToolset, setConfigToolset] = useState<ToolsetInfo | null>(null);
@@ -172,8 +183,11 @@ export default function SkillsPage() {
   const {
     profile: selectedProfile,
   } = useProfileScope();
+<<<<<<< HEAD
   // A return visit must not reuse the previous visit's successful probe.
   const wisdomScope = useMemo(() => ({ profile: selectedProfile }), [selectedProfile]);
+=======
+>>>>>>> origin/main
 
   useEffect(() => {
     // Promise-chain shape: setState fires only inside async callbacks so the
@@ -196,6 +210,7 @@ export default function SkillsPage() {
     };
   }, [selectedProfile]);
 
+<<<<<<< HEAD
   useEffect(() => {
     let cancelled = false;
     let pollTimer: ReturnType<typeof setTimeout> | undefined;
@@ -241,6 +256,8 @@ export default function SkillsPage() {
   const wisdomEntitled =
     wisdomEntitlement?.scope === wisdomScope && wisdomEntitlement.entitled === true;
 
+=======
+>>>>>>> origin/main
   /* ---- Toggle skill ---- */
   const handleToggleSkill = async (skill: SkillInfo) => {
     setTogglingSkills((prev) => new Set(prev).add(skill.name));
@@ -339,8 +356,11 @@ export default function SkillsPage() {
       (s) =>
         s.name.toLowerCase().includes(lowerSearch) ||
         s.description.toLowerCase().includes(lowerSearch) ||
+<<<<<<< HEAD
         skillDisplayName(s).toLowerCase().includes(lowerSearch) ||
         skillDisplayDescription(s).toLowerCase().includes(lowerSearch) ||
+=======
+>>>>>>> origin/main
         (s.category ?? "").toLowerCase().includes(lowerSearch),
     );
   }, [skills, isSearching, lowerSearch]);
@@ -348,18 +368,26 @@ export default function SkillsPage() {
   const activeSkills = useMemo(() => {
     if (isSearching) return [];
     if (!activeCategory)
+<<<<<<< HEAD
       return [...skills].sort((a, b) =>
         skillDisplayName(a).localeCompare(skillDisplayName(b)),
       );
+=======
+      return [...skills].sort((a, b) => a.name.localeCompare(b.name));
+>>>>>>> origin/main
     return skills
       .filter((s) =>
         activeCategory === "__none__"
           ? !s.category
           : s.category === activeCategory,
       )
+<<<<<<< HEAD
       .sort((a, b) =>
         skillDisplayName(a).localeCompare(skillDisplayName(b)),
       );
+=======
+      .sort((a, b) => a.name.localeCompare(b.name));
+>>>>>>> origin/main
   }, [skills, activeCategory, isSearching]);
 
   const allCategories = useMemo(() => {
@@ -489,13 +517,18 @@ export default function SkillsPage() {
                 />
                 <PanelItem
                   icon={Search}
+<<<<<<< HEAD
                   label={t.skills.wisdom.browseHub}
+=======
+                  label="Browse hub"
+>>>>>>> origin/main
                   active={view === "hub"}
                   onClick={() => {
                     setView("hub");
                     setSearch("");
                   }}
                 />
+<<<<<<< HEAD
                 {wisdomEntitled && (
                   <PanelItem
                     icon={Sparkles}
@@ -507,6 +540,8 @@ export default function SkillsPage() {
                     }}
                   />
                 )}
+=======
+>>>>>>> origin/main
               </div>
 
               {view === "skills" &&
@@ -651,8 +686,11 @@ export default function SkillsPage() {
                 )}
               </CardContent>
             </Card>
+<<<<<<< HEAD
           ) : view === "collective" && wisdomEntitled ? (
             <CollectiveWisdomPanel profile={selectedProfile || undefined} />
+=======
+>>>>>>> origin/main
           ) : view === "toolsets" ? (
             /* Toolsets grid */
             <>
@@ -843,11 +881,19 @@ function SkillRow({
               skill.enabled ? "text-foreground" : "text-muted-foreground"
             }`}
           >
+<<<<<<< HEAD
             {skillDisplayName(skill)}
           </span>
         </div>
         <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
           {skillDisplayDescription(skill) || noDescriptionLabel}
+=======
+            {skill.name}
+          </span>
+        </div>
+        <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
+          {skill.description || noDescriptionLabel}
+>>>>>>> origin/main
         </p>
       </div>
       <Button
@@ -1358,11 +1404,19 @@ function HubResultCard({
           type="button"
           className="flex-1 min-w-0 text-left"
           onClick={onOpen}
+<<<<<<< HEAD
           aria-label={`Open ${skillDisplayName(result)}`}
         >
           <div className="flex flex-wrap items-center gap-2 mb-0.5">
             <span className="font-mono-ui text-sm hover:underline">
               {skillDisplayName(result)}
+=======
+          aria-label={`Open ${result.name}`}
+        >
+          <div className="flex flex-wrap items-center gap-2 mb-0.5">
+            <span className="font-mono-ui text-sm hover:underline">
+              {result.name}
+>>>>>>> origin/main
             </span>
             <Badge tone={trust.tone} className="text-xs">
               {trust.label}
@@ -1377,7 +1431,11 @@ function HubResultCard({
             )}
           </div>
           <p className="text-xs text-text-secondary line-clamp-2">
+<<<<<<< HEAD
             {skillDisplayDescription(result)}
+=======
+            {result.description}
+>>>>>>> origin/main
           </p>
           <div className="flex flex-wrap items-center gap-1 mt-1">
             {result.tags.slice(0, 5).map((tag) => (
@@ -1476,7 +1534,11 @@ function SkillDetailDialog({
         <DialogHeader>
           <DialogTitle className="flex flex-wrap items-center gap-2 text-sm">
             <Package className="h-4 w-4" />
+<<<<<<< HEAD
             {skillDisplayName(result)}
+=======
+            {result.name}
+>>>>>>> origin/main
             <Badge tone={trust.tone} className="text-xs">
               {trust.label}
             </Badge>
@@ -1490,15 +1552,24 @@ function SkillDetailDialog({
             )}
           </DialogTitle>
           <DialogDescription className="sr-only">
+<<<<<<< HEAD
             Preview the SKILL.md source and run a security scan for{" "}
             {skillDisplayName(result)} before installing.
+=======
+            Preview the SKILL.md source and run a security scan for {result.name}{" "}
+            before installing.
+>>>>>>> origin/main
           </DialogDescription>
         </DialogHeader>
 
         <div className="mt-1 flex flex-col gap-1">
+<<<<<<< HEAD
           <p className="text-xs text-text-secondary">
             {skillDisplayDescription(result)}
           </p>
+=======
+          <p className="text-xs text-text-secondary">{result.description}</p>
+>>>>>>> origin/main
           <p className="text-xs font-mono text-text-tertiary truncate">
             {result.identifier}
           </p>

@@ -17,6 +17,7 @@ export type Locale =
   | "hu"
   | "ar";
 
+<<<<<<< HEAD
 export interface WisdomTranslations {
   syncRecovery?: import('@hermes/shared').WisdomSyncCopy
   notificationPreferences: import('@hermes/shared').WisdomMuteCopy;
@@ -109,6 +110,8 @@ export interface WisdomTranslations {
   preserveModified: string
 }
 
+=======
+>>>>>>> origin/main
 export interface Translations {
   // ── Common ──
   common: {
@@ -543,7 +546,10 @@ export interface Translations {
 
   // ── Skills page ──
   skills: {
+<<<<<<< HEAD
     wisdom: WisdomTranslations;
+=======
+>>>>>>> origin/main
     title: string;
     searchPlaceholder: string;
     enabledOf: string;

@@ -157,6 +157,7 @@ describe('useSlashCompletions', () => {
     expect(commandsOf(await completions(api, 'research'))).toEqual(['/research-paper-writing', '/research'])
   })
 
+<<<<<<< HEAD
   it('shows backend documentation for wisdom subcommands', async () => {
     const request = vi.fn().mockImplementation((method: string) =>
       Promise.resolve(
@@ -183,6 +184,8 @@ describe('useSlashCompletions', () => {
     expect((installed?.metadata as { command?: string })?.command).toBe('/wisdom installed')
   })
 
+=======
+>>>>>>> origin/main
   it('keeps a registry command in Commands even when the desktop table has no row', async () => {
     const request = vi.fn().mockImplementation((method: string) =>
       Promise.resolve(

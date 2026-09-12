@@ -305,6 +305,7 @@ export const ar = defineLocale({
   },
 
   skills: {
+<<<<<<< HEAD
     wisdom: {
       notificationPreferences: {
         title: "إعدادات الإشعارات",
@@ -423,6 +424,8 @@ export const ar = defineLocale({
       acceptSensitive: 'أوافق صراحةً على المتطلبات الحساسة الجديدة.',
       preserveModified: 'احتفظ أولاً بنسختي المعدلة كتفرع غير مُدار.'
     },
+=======
+>>>>>>> origin/main
     title: "المهارات",
     searchPlaceholder: "بحث في المهارات ومجموعات الأدوات...",
     enabledOf: "{enabled}/{total} مفعلة",

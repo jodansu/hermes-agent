@@ -359,6 +359,7 @@ export const ko: Translations = {
   },
 
   skills: {
+<<<<<<< HEAD
     wisdom: {
       notificationPreferences: {
         title: "알림 설정",
@@ -477,6 +478,8 @@ export const ko: Translations = {
       acceptSensitive: '새로운 민감 요구 사항에 명시적으로 동의합니다.',
       preserveModified: '먼저 수정한 복사본을 관리되지 않는 포크로 보존합니다.'
     },
+=======
+>>>>>>> origin/main
     title: "스킬",
     searchPlaceholder: "스킬 및 도구 세트 검색...",
     enabledOf: "{enabled}/{total} 활성화됨",

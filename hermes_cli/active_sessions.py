@@ -181,11 +181,16 @@ def _lease_paths(
     return home / "runtime" / "active_sessions.json", home / "runtime" / "active_sessions.lock"
 
 
+<<<<<<< HEAD
 def _flock(fh, *, lock: bool, blocking: bool = True) -> None:
+=======
+def _flock(fh, *, lock: bool) -> None:
+>>>>>>> origin/main
     """Exclusive whole-file lock/unlock on ``fh`` (fcntl on POSIX, msvcrt on Windows)."""
     if os.name == "nt":
         import msvcrt
         fh.seek(0)
+<<<<<<< HEAD
         mode = (msvcrt.LK_LOCK if blocking else msvcrt.LK_NBLCK) if lock else msvcrt.LK_UNLCK
         msvcrt.locking(fh.fileno(), mode, 1)
     else:
@@ -198,13 +203,28 @@ class _FileLock:
     def __init__(self, path: Path, *, blocking: bool = True):
         self.path = path
         self.blocking = blocking
+=======
+        msvcrt.locking(fh.fileno(), msvcrt.LK_LOCK if lock else msvcrt.LK_UNLCK, 1)
+    else:
+        import fcntl
+        fcntl.flock(fh.fileno(), fcntl.LOCK_EX if lock else fcntl.LOCK_UN)
+
+
+class _FileLock:
+    def __init__(self, path: Path):
+        self.path = path
+>>>>>>> origin/main
         self._fh = None
 
     def __enter__(self):
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self._fh = open(self.path, "a+b")
         try:
+<<<<<<< HEAD
             _flock(self._fh, lock=True, blocking=self.blocking)
+=======
+            _flock(self._fh, lock=True)
+>>>>>>> origin/main
         except Exception as exc:
             self._fh.close()
             self._fh = None

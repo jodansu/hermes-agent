@@ -1,12 +1,16 @@
 """Tests for the central command registry and autocomplete."""
 
+<<<<<<< HEAD
 import pytest
+=======
+>>>>>>> origin/main
 from prompt_toolkit.completion import CompleteEvent
 from prompt_toolkit.document import Document
 
 from hermes_cli.commands import COMMAND_REGISTRY, COMMANDS, COMMANDS_BY_CATEGORY, CommandDef, GATEWAY_KNOWN_COMMANDS, SUBCOMMANDS, command_desktop_meta, gateway_help_lines, infer_argument_mode, resolve_command
 from hermes_cli.commands_completion import SlashCommandAutoSuggest, SlashCommandCompleter
 from hermes_cli.commands_platforms import _CMD_NAME_LIMIT, _SLACK_RESERVED_COMMANDS, _SLACK_VIA_HERMES_ONLY, _clamp_command_names, _sanitize_telegram_name, slack_app_manifest, slack_native_slashes, slack_subcommand_map, telegram_bot_commands, telegram_menu_commands
+<<<<<<< HEAD
 from hermes_cli.commands import SUBCOMMAND_DESCRIPTIONS, WISDOM_SUBCOMMAND_HELP
 
 
@@ -14,6 +18,8 @@ from hermes_cli.commands import SUBCOMMAND_DESCRIPTIONS, WISDOM_SUBCOMMAND_HELP
 def _wisdom_entitled_by_default(monkeypatch):
     """Registry tests exercise the eligible view unless a test overrides it."""
     monkeypatch.setattr("hermes_wisdom.entitlement.is_entitled", lambda: True)
+=======
+>>>>>>> origin/main
 
 
 def _completions(completer: SlashCommandCompleter, text: str):
@@ -31,6 +37,7 @@ def _completions(completer: SlashCommandCompleter, text: str):
 
 class TestCommandRegistry:
 
+<<<<<<< HEAD
     def test_wisdom_is_a_busy_rejecting_cross_client_command(self):
         command = resolve_command("wisdom")
 
@@ -50,6 +57,8 @@ class TestCommandRegistry:
 
         assert "wisdom" in {name for name, _description in menu}
 
+=======
+>>>>>>> origin/main
 
     def test_save_command_supports_formats(self):
         cmd = resolve_command("save")
@@ -165,6 +174,7 @@ class TestGatewayKnownCommands:
 
 class TestGatewayHelpLines:
 
+<<<<<<< HEAD
     def test_wisdom_visibility_follows_local_entitlement(self, monkeypatch):
         monkeypatch.setattr("hermes_wisdom.entitlement.is_entitled", lambda: False)
         assert not any("/wisdom" in line for line in gateway_help_lines())
@@ -176,6 +186,8 @@ class TestGatewayHelpLines:
         assert "wisdom" in {name for name, _description in telegram_bot_commands()}
         assert "wisdom" in {name for name, _description, _hint in slack_native_slashes()}
 
+=======
+>>>>>>> origin/main
     def test_excludes_cli_only_commands_without_config_gate(self):
         import re
         lines = gateway_help_lines()
@@ -245,12 +257,15 @@ class TestSlackNativeSlashes:
     COMMAND_REGISTRY entry as a first-class Slack slash, matching Discord
     and Telegram."""
 
+<<<<<<< HEAD
     def test_wisdom_is_native_and_low_value_start_ping_is_via_hermes(self):
         names = {name for name, _description, _hint in slack_native_slashes()}
 
         assert "wisdom" in names
         assert "start" not in names
 
+=======
+>>>>>>> origin/main
 
     def test_names_respect_slack_limits(self):
         for name, _desc, _hint in slack_native_slashes():
@@ -435,15 +450,19 @@ class TestSubcommands:
         assert "/quit" not in SUBCOMMANDS
         assert "/clear" not in SUBCOMMANDS
 
+<<<<<<< HEAD
     def test_wisdom_subcommands_include_registry_owned_documentation(self):
         assert SUBCOMMAND_DESCRIPTIONS["/wisdom"] == WISDOM_SUBCOMMAND_HELP
 
+=======
+>>>>>>> origin/main
 
 # ── Subcommand tab completion ───────────────────────────────────────────
 
 
 class TestSubcommandCompletion:
 
+<<<<<<< HEAD
     def test_wisdom_subcommands_show_usage_and_descriptions(self):
         completions = _completions(SlashCommandCompleter(), "/wisdom ")
         by_name = {completion.text: completion for completion in completions}
@@ -454,6 +473,8 @@ class TestSubcommandCompletion:
             == WISDOM_SUBCOMMAND_HELP["installed"]
         )
 
+=======
+>>>>>>> origin/main
 
     def test_tools_enable_skips_already_listed(self, monkeypatch):
         """If the user already typed a name, don't suggest it again."""

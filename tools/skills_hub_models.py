@@ -35,8 +35,11 @@ class SkillMeta:
     path: Optional[str] = None
     tags: List[str] = field(default_factory=list)
     extra: Dict[str, Any] = field(default_factory=dict)
+<<<<<<< HEAD
     editorial_name: Optional[str] = None
     editorial_description: Optional[str] = None
+=======
+>>>>>>> origin/main
 
 
 @dataclass

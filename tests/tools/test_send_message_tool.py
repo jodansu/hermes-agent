@@ -27,18 +27,26 @@ def _reset_signal_scheduler():
 
 from gateway.config import Platform
 from tools.send_message_tool import (
+<<<<<<< HEAD
     _send_to_platform,
     send_message_tool,
 )
 from tools.send_message_senders import (
+=======
+>>>>>>> origin/main
     _resolve_slack_user_target,
     _send_matrix_via_adapter,
     _send_signal,
     _send_telegram,
+<<<<<<< HEAD
 )
 from tools.wisdom_notifications import (
     send_slack_wisdom_notification_pane,
     send_telegram_notification_pane,
+=======
+    _send_to_platform,
+    send_message_tool,
+>>>>>>> origin/main
 )
 from tools.send_message_targets import _parse_target_ref
 # Discord helpers moved to the plugin in #24325.  Import from the new path
@@ -248,6 +256,7 @@ def _make_config():
 def _install_telegram_mock(monkeypatch, bot):
     parse_mode = SimpleNamespace(MARKDOWN_V2="MarkdownV2", HTML="HTML")
     constants_mod = SimpleNamespace(ParseMode=parse_mode)
+<<<<<<< HEAD
 
     class InlineKeyboardButton:
         def __init__(self, text, *, url=None, callback_data=None):
@@ -284,6 +293,12 @@ def _install_telegram_mock(monkeypatch, bot):
         MessageEntity=_MessageEntity,
         constants=constants_mod,
     )
+=======
+    # MessageEntity needed by #27865 mention-detection path; tests don't
+    # inspect it but the import must succeed.
+    _MessageEntity = lambda **_kw: SimpleNamespace(**_kw)
+    telegram_mod = SimpleNamespace(Bot=lambda token: bot, MessageEntity=_MessageEntity, constants=constants_mod)
+>>>>>>> origin/main
     monkeypatch.setitem(sys.modules, "telegram", telegram_mod)
     monkeypatch.setitem(sys.modules, "telegram.constants", constants_mod)
 
@@ -313,6 +328,7 @@ def _ensure_slack_mock(monkeypatch):
 
 
 class TestSendMessageTool:
+<<<<<<< HEAD
     def test_wisdom_notification_pane_allows_only_bounded_trusted_callbacks(self):
         telegram_cfg = SimpleNamespace(enabled=True, token="tok", extra={})
         config = SimpleNamespace(
@@ -465,6 +481,8 @@ class TestSendMessageTool:
             ],
         }
 
+=======
+>>>>>>> origin/main
     def test_ntfy_topic_target_is_explicit(self):
         chat_id, thread_id, is_explicit = _parse_target_ref("ntfy", "alerts-channel")
 
@@ -969,6 +987,7 @@ class TestSendTelegramHtmlDetection:
         assert kwargs["parse_mode"] == "HTML"
         assert kwargs["text"] == "<b>Hello</b> world"
 
+<<<<<<< HEAD
     def test_notification_url_buttons_render_as_action_rows(self, monkeypatch):
         bot = self._make_bot()
         _install_telegram_mock(monkeypatch, bot)
@@ -1176,6 +1195,8 @@ class TestSendTelegramHtmlDetection:
 
         assert "Telegram rich notification failed" in result["error"]
         bot.send_message.assert_not_awaited()
+=======
+>>>>>>> origin/main
 
     def test_transient_bad_gateway_retries_text_send(self, monkeypatch):
         bot = self._make_bot()

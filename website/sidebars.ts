@@ -242,7 +242,10 @@ const sidebars: SidebarsConfig = {
                   collapsed: true,
                   items: [
                     'user-guide/skills/bundled/productivity/productivity-airtable',
+<<<<<<< HEAD
                     'user-guide/skills/bundled/productivity/productivity-collective-wisdom-install',
+=======
+>>>>>>> origin/main
                     'user-guide/skills/bundled/productivity/productivity-box',
                     'user-guide/skills/bundled/productivity/productivity-document-to-action-items',
                     'user-guide/skills/bundled/productivity/productivity-docx',

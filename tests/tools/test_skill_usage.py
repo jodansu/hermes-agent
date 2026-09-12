@@ -141,6 +141,7 @@ def test_skill_reuse_and_post_patch_reuse_are_derived_atomically(
     assert record["patch_generation"] == 1
     assert record["last_reused_patch_generation"] == 1
 
+<<<<<<< HEAD
 
 def test_bump_use_associates_wisdom_candidate_with_task_session(
     skills_home,
@@ -200,6 +201,8 @@ def test_wisdom_qualification_follows_only_committed_use_and_mutation(skills_hom
     assert len(events) == 4
 
 
+=======
+>>>>>>> origin/main
 def test_skill_state_events_emit_only_for_real_transitions(skills_home, monkeypatch):
     from hermes_cli import lifecycle
     from tools.skill_usage import (

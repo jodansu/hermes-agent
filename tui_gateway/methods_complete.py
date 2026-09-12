@@ -221,7 +221,10 @@ def _(rid, params: dict) -> dict:
 
 
 @method("complete.slash")
+<<<<<<< HEAD
 @_profile_scoped
+=======
+>>>>>>> origin/main
 @_catch(5020)
 def _(rid, params: dict) -> dict:
     text = params.get("text", "")

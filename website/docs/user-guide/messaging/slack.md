@@ -305,6 +305,7 @@ For backward compatibility with older manifests, you can still type
 run the tests`. Free-form questions also work: `/hermes what's the
 weather?` is treated as a regular message.
 
+<<<<<<< HEAD
 ### Manage Collective Wisdom from Slack
 
 `/wisdom` is a native Slack command and opens an interactive Block Kit control
@@ -348,6 +349,8 @@ about the native `/wisdom` command:
 hermes slack manifest --write
 ```
 
+=======
+>>>>>>> origin/main
 ### Using commands inside threads (the `!cmd` prefix)
 
 Slack itself blocks native slash commands inside thread replies — try

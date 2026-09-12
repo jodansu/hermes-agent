@@ -8,10 +8,13 @@ from unittest.mock import patch
 import pytest
 
 import tools.skills_tool as skills_tool_module
+<<<<<<< HEAD
 from agent.skill_utils import (
     extract_skill_editorial_metadata,
     load_skill_editorial_metadata,
 )
+=======
+>>>>>>> origin/main
 from tools.skills_tool import (
     _get_required_environment_variables,
     _parse_frontmatter,
@@ -90,6 +93,7 @@ class TestParseFrontmatter:
         assert not body.startswith(bom)
 
 
+<<<<<<< HEAD
 class TestEditorialMetadata:
     def test_uses_explicit_human_facing_copy(self):
         assert extract_skill_editorial_metadata(
@@ -146,6 +150,8 @@ class TestEditorialMetadata:
         }
 
 
+=======
+>>>>>>> origin/main
 # ---------------------------------------------------------------------------
 # _parse_tags
 # ---------------------------------------------------------------------------
@@ -277,6 +283,7 @@ class TestFindAllSkills:
         assert {s["name"] for s in skills} == {"skill-a", "skill-b", "axolotl"}
         assert [s["category"] for s in skills if s["name"] == "axolotl"] == ["mlops"]
 
+<<<<<<< HEAD
     def test_resolves_editorial_copy_with_legacy_fallbacks(self, tmp_path):
         with patch("tools.skills_tool.SKILLS_DIR", tmp_path):
             _make_skill(
@@ -306,6 +313,8 @@ class TestFindAllSkills:
             == skills["legacy-skill"]["description"]
         )
 
+=======
+>>>>>>> origin/main
 
     def test_description_falls_back_to_body_and_is_truncated(self, tmp_path):
         no_desc = tmp_path / "no-desc"
@@ -367,6 +376,7 @@ class TestSkillsList:
         assert filtered["count"] == 1
         assert filtered["skills"][0]["name"] == "skill-a"
 
+<<<<<<< HEAD
     def test_does_not_expose_editorial_copy_to_the_agent(self, tmp_path):
         with patch("tools.skills_tool.SKILLS_DIR", tmp_path):
             _make_skill(
@@ -387,6 +397,8 @@ class TestSkillsList:
             "category": None,
         }
 
+=======
+>>>>>>> origin/main
     def test_category_filter_finds_symlinked_category(self, tmp_path):
         external_root = tmp_path / "repo"
         skills_root = tmp_path / "skills"
@@ -744,11 +756,14 @@ class TestFindAllSkillsSecureSetup:
 
 
 class TestSkillViewPrerequisites:
+<<<<<<< HEAD
     @pytest.fixture(autouse=True)
     def isolate_secret_capture(self, monkeypatch):
         # Other suites register a live UI responder; these tests own their callbacks.
         monkeypatch.setattr(skills_tool_module, "_secret_capture_callback", None)
 
+=======
+>>>>>>> origin/main
     def test_legacy_prerequisites_expose_required_env_setup_metadata(
         self, tmp_path, monkeypatch
     ):

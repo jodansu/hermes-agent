@@ -7,7 +7,10 @@ import {
   AUDIO_TRANSCRIBE_MIN_REQUEST_TIMEOUT_MS,
   audioSpeakRequestTimeoutMs,
   audioTranscribeRequestTimeoutMs,
+<<<<<<< HEAD
   chooseWisdomMute,
+=======
+>>>>>>> origin/main
   deleteProfile,
   deleteSession,
   getAllSessionMessages,
@@ -22,14 +25,20 @@ import {
   getSession,
   getSessionMessages,
   getStatus,
+<<<<<<< HEAD
   getWisdomEntitlement,
   getWisdomMute,
+=======
+>>>>>>> origin/main
   LATEST_SESSION_MESSAGES_LIMIT,
   listAllProfileSessions,
   listSessions,
   listSidebarSessions,
   pluginSocket,
+<<<<<<< HEAD
   prepareWisdomMute,
+=======
+>>>>>>> origin/main
   resetSidebarBatchCapability,
   setApiRequestConnection,
   setApiRequestProfile,
@@ -77,6 +86,7 @@ describe('Hermes REST helpers', () => {
     )
   })
 
+<<<<<<< HEAD
   it('pins Wisdom preference reads and native choices to the selected backend and profile', async () => {
     const scope = { connectionId: 'source-a', profile: 'worker' }
     const controlId = 'a'.repeat(32)
@@ -120,6 +130,8 @@ describe('Hermes REST helpers', () => {
     expect(api).toHaveBeenCalledWith(expect.objectContaining({ ...scope, path: '/api/wisdom/entitlement' }))
   })
 
+=======
+>>>>>>> origin/main
   it('uses a longer timeout for the all-profile session list', async () => {
     await listAllProfileSessions(50, 1)
 

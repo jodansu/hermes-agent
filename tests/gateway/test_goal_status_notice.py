@@ -14,7 +14,10 @@ from hermes_cli.goals import CONTINUATION_PROMPT_TEMPLATE
 class FakeAdapter:
     def __init__(self):
         self.calls = []
+<<<<<<< HEAD
         self.wisdom_calls = []
+=======
+>>>>>>> origin/main
         self.callbacks = {}
         self._active_sessions = {}
 
@@ -32,6 +35,7 @@ class FakeAdapter:
     def register_post_delivery_callback(self, session_key, callback, *, generation=None):
         self.callbacks[session_key] = (generation, callback)
 
+<<<<<<< HEAD
     async def send_wisdom_candidate_notifications(
         self, chat_id, session_id, *, metadata=None
     ):
@@ -39,6 +43,8 @@ class FakeAdapter:
             {"chat_id": chat_id, "session_id": session_id, "metadata": metadata}
         )
 
+=======
+>>>>>>> origin/main
 
 def _goal_continuation_event(source, goal="finish the task"):
     return MessageEvent(
@@ -88,6 +94,7 @@ async def test_goal_status_notice_defers_until_post_delivery_callback():
     ]
 
 
+<<<<<<< HEAD
 @pytest.mark.asyncio
 async def test_wisdom_candidate_notice_defers_in_the_originating_telegram_session():
     runner = GatewayRunner.__new__(GatewayRunner)
@@ -162,3 +169,5 @@ async def test_wisdom_candidate_notice_defers_to_slack_with_private_routing_iden
             },
         }
     ]
+=======
+>>>>>>> origin/main

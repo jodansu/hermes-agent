@@ -49,6 +49,7 @@ function jsonFetchMock(body: unknown = { ok: true }) {
 }
 
 describe("fetchJSON", () => {
+<<<<<<< HEAD
   it("keeps native Wisdom mute choices scoped and preserves explicit unmute", async () => {
     const fetchMock = jsonFetchMock();
     vi.stubGlobal("fetch", fetchMock);
@@ -80,6 +81,8 @@ describe("fetchJSON", () => {
     expect(fetchMock.mock.calls[0][0]).toBe("/api/wisdom/entitlement?profile=worker");
   });
 
+=======
+>>>>>>> origin/main
   it("tries the one-shot reload path for loopback 401s", async () => {
     vi.stubGlobal(
       "fetch",

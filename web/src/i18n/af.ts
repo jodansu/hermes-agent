@@ -360,6 +360,7 @@ export const af: Translations = {
   },
 
   skills: {
+<<<<<<< HEAD
     wisdom: {
       notificationPreferences: {
         title: "Kennisgewinginstellings",
@@ -481,6 +482,8 @@ export const af: Translations = {
       acceptSensitive: 'Ek aanvaar die nuwe sensitiewe vereistes uitdruklik.',
       preserveModified: 'Bewaar eers my gewysigde kopie as ’n onbestuurde vurk.'
     },
+=======
+>>>>>>> origin/main
     title: "Vaardighede",
     searchPlaceholder: "Soek vaardighede en gereedskapstelle...",
     enabledOf: "{enabled}/{total} geaktiveer",

@@ -33,12 +33,15 @@ ORG_ACTIVE_MARKER = ".active_org"
 ORG_PROVENANCE_FILE = ".org-provenance.json"
 ORG_BASELINE_FILE = ".org-baseline.json"  # upstream fingerprint; detects local edits
 
+<<<<<<< HEAD
 # Collective Wisdom managed installs are intentionally separate from the M2
 # whole-org mirror. The only writer of this marker is the Wisdom setup/client
 # path after the Gateway has accepted the profile's installation identity.
 WISDOM_MANAGED_DIR_NAME = "_wisdom"
 WISDOM_ACTIVE_MARKER = ".active_org"
 
+=======
+>>>>>>> origin/main
 
 def read_active_org_id(skills_dir: Path) -> Optional[str]:
     """The org id whose mirror may resolve, or None (no org skills load)."""
@@ -49,6 +52,7 @@ def read_active_org_id(skills_dir: Path) -> Optional[str]:
         return None
 
 
+<<<<<<< HEAD
 def read_active_wisdom_org_id(skills_dir: Path) -> Optional[str]:
     """The last Gateway-verified org whose managed Wisdom skills may load."""
     try:
@@ -70,6 +74,8 @@ def is_wisdom_managed_path(path, skills_dir: Path) -> bool:
     return bool(rel.parts) and rel.parts[0] == WISDOM_MANAGED_DIR_NAME
 
 
+=======
+>>>>>>> origin/main
 def _org_rel_parts(path, skills_dir: Path) -> Tuple[str, ...]:
     """Path parts of *path* relative to *skills_dir* if it is under ``_org/``, else ``()``."""
     try:
@@ -760,6 +766,7 @@ def is_skill_description_truncated_for_prompt(frontmatter: Dict[str, Any]) -> bo
     return len(_normalize_skill_description(frontmatter)) > SKILL_PROMPT_DESC_LIMIT
 
 
+<<<<<<< HEAD
 def extract_skill_editorial_metadata(
     frontmatter: Dict[str, Any],
     *,
@@ -849,11 +856,22 @@ def iter_skill_index_files(skills_dir: Path, filename: str):
     active_wisdom_org = read_active_wisdom_org_id(skills_dir)
     org_root = os.path.join(skills_dir_str, ORG_MIRROR_DIR_NAME)
     wisdom_root = os.path.join(skills_dir_str, WISDOM_MANAGED_DIR_NAME)
+=======
+def iter_skill_index_files(skills_dir: Path, filename: str):
+    """Walk skills_dir yielding sorted paths matching *filename*; prunes
+    EXCLUDED_SKILL_DIRS and support dirs of skill roots. Org mirrors are
+    TOKEN-GATED: only the active org's subdir is walked, so leaving an org
+    stops its skills resolving without manual cleanup."""
+    skills_dir_str = str(skills_dir)
+    active_org = read_active_org_id(skills_dir)
+    org_root = os.path.join(skills_dir_str, ORG_MIRROR_DIR_NAME)
+>>>>>>> origin/main
     matches: list[str] = []
     for root, dirs, files in os.walk(skills_dir_str, followlinks=True):
         has_skill_md = "SKILL.md" in files
         if root == skills_dir_str and ORG_MIRROR_DIR_NAME in dirs and active_org is None:
             dirs.remove(ORG_MIRROR_DIR_NAME)
+<<<<<<< HEAD
         if root == skills_dir_str and WISDOM_MANAGED_DIR_NAME in dirs and active_wisdom_org is None:
             dirs.remove(WISDOM_MANAGED_DIR_NAME)
         elif root == org_root:
@@ -867,6 +885,11 @@ def iter_skill_index_files(skills_dir: Path, filename: str):
             if d not in EXCLUDED_SKILL_DIRS
             and not (has_skill_md and d in SKILL_SUPPORT_DIRS)
         ]
+=======
+        elif root == org_root:
+            dirs[:] = [d for d in dirs if d == active_org]
+        dirs[:] = [d for d in dirs if d not in EXCLUDED_SKILL_DIRS and not (has_skill_md and d in SKILL_SUPPORT_DIRS)]
+>>>>>>> origin/main
         if filename in files:
             matches.append(os.path.join(root, filename))
     yield from map(Path, sorted(matches))

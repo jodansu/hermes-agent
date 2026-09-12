@@ -360,6 +360,7 @@ export const tr: Translations = {
   },
 
   skills: {
+<<<<<<< HEAD
     wisdom: {
       notificationPreferences: {
         title: "Bildirim ayarları",
@@ -480,6 +481,8 @@ export const tr: Translations = {
       acceptSensitive: 'Yeni hassas gereksinimleri açıkça kabul ediyorum.',
       preserveModified: 'Önce değiştirilmiş kopyamı yönetilmeyen bir çatal olarak koru.'
     },
+=======
+>>>>>>> origin/main
     title: "Yetenekler",
     searchPlaceholder: "Yetenek ve araç setlerinde ara...",
     enabledOf: "{enabled}/{total} etkin",

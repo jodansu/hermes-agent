@@ -127,6 +127,7 @@ async def test_idle_queue_sends_payload_as_next_turn(command_text):
     assert captured["key"] == build_session_key(_make_source())
     assert captured["generation"] == 1
     assert runner._running_agents == {}
+<<<<<<< HEAD
 
 
 @pytest.mark.asyncio
@@ -146,3 +147,5 @@ async def test_wisdom_dm_continuation_obeys_wisdom_slash_policy():
     assert result == "denied"
     assert checked == ["start", "wisdom"]
     adapter.send_wisdom_continuation.assert_not_awaited()
+=======
+>>>>>>> origin/main

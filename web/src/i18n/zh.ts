@@ -355,6 +355,7 @@ export const zh: Translations = {
   },
 
   skills: {
+<<<<<<< HEAD
     wisdom: {
       notificationPreferences: {
         title: "通知设置",
@@ -472,6 +473,8 @@ export const zh: Translations = {
       acceptSensitive: '我明确接受新的敏感要求。',
       preserveModified: '先将我修改过的副本保留为不受管理的分支。'
     },
+=======
+>>>>>>> origin/main
     title: "技能",
     searchPlaceholder: "搜索技能和工具集...",
     enabledOf: "已启用 {enabled}/{total}",

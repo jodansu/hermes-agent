@@ -1360,6 +1360,7 @@ DEFAULT_CONFIG = {
         "ledger": True,
     },
 
+<<<<<<< HEAD
     # Collective Wisdom — local qualification plus owner-consented sharing.
     # The sync.base_url transport and existing Nous OAuth token are reused;
     # no Gateway secret or URL is exposed to renderer clients.
@@ -1389,6 +1390,8 @@ DEFAULT_CONFIG = {
         },
     },
 
+=======
+>>>>>>> origin/main
     # Curator — background maintenance of AGENT-CREATED skills (never hub-installed): marks
     # long-unused skills stale, archives (never deletes) obsolete ones, optionally consolidates
     # overlaps via a forked aux-model agent. Inactivity-triggered from session start, no cron

@@ -360,6 +360,7 @@ export const ru: Translations = {
   },
 
   skills: {
+<<<<<<< HEAD
     wisdom: {
       notificationPreferences: {
         title: "Настройки уведомлений",
@@ -479,6 +480,8 @@ export const ru: Translations = {
       acceptSensitive: 'Я явно принимаю новые чувствительные требования.',
       preserveModified: 'Сначала сохранить мою изменённую копию как неуправляемый форк.'
     },
+=======
+>>>>>>> origin/main
     title: "Навыки",
     searchPlaceholder: "Поиск навыков и наборов инструментов...",
     enabledOf: "{enabled}/{total} включено",

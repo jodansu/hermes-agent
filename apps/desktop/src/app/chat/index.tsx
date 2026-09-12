@@ -18,7 +18,11 @@ import { PromptOverlays } from '@/components/prompt-overlays'
 import { Button } from '@/components/ui/button'
 import { ErrorState } from '@/components/ui/error-state'
 import { TitleMenuTrigger } from '@/components/ui/title-menu-trigger'
+<<<<<<< HEAD
 import { type HermesGateway, type ProfileScope } from '@/hermes'
+=======
+import { type HermesGateway } from '@/hermes'
+>>>>>>> origin/main
 import { useI18n } from '@/i18n'
 import type { ChatMessage } from '@/lib/chat-messages'
 import { NEW_SESSION_TITLE, quickModelOptions, sessionTitle } from '@/lib/chat-runtime'
@@ -28,7 +32,10 @@ import { useStoreSelector } from '@/lib/use-session-slice'
 import { cn } from '@/lib/utils'
 import { migrateSessionDraft } from '@/store/composer'
 import { migrateQueuedPrompts, parkQueuedPrompts } from '@/store/composer-queue'
+<<<<<<< HEAD
 import { activeGatewayConnectionId } from '@/store/gateway'
+=======
+>>>>>>> origin/main
 import { $introSplash } from '@/store/intro-splash'
 import { $pinnedSessionIds } from '@/store/layout'
 import { $petActive } from '@/store/pet'
@@ -429,6 +436,7 @@ const ChatViewContent = memo(function ChatViewContent({
   const awaitingResponse = useStore(view.$awaitingResponse)
   const busy = useStore(view.$busy)
   const activeGatewayProfile = useStore($activeGatewayProfile)
+<<<<<<< HEAD
   const wisdomConnectionId = activeGatewayConnectionId()
 
   const wisdomProfile = useMemo<ProfileScope>(
@@ -436,6 +444,8 @@ const ChatViewContent = memo(function ChatViewContent({
     [activeGatewayProfile, wisdomConnectionId]
   )
 
+=======
+>>>>>>> origin/main
   const contextSuggestions = useStore($contextSuggestions)
   // Per-session (SessionView) reads — a tile IS its session, so these come
   // from the view slice, not the global atoms (which track the primary only).
@@ -705,7 +715,10 @@ const ChatViewContent = memo(function ChatViewContent({
             onRestoreToMessage={onRestoreToMessage}
             sessionId={activeSessionId}
             sessionKey={threadKey}
+<<<<<<< HEAD
             wisdomProfile={wisdomProfile}
+=======
+>>>>>>> origin/main
           />
           {resumeExhausted && routedSessionId && (
             <div className="absolute inset-0 z-10 grid place-items-center bg-(--ui-chat-surface-background) px-8 py-10">

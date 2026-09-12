@@ -359,6 +359,7 @@ export const ja: Translations = {
   },
 
   skills: {
+<<<<<<< HEAD
     wisdom: {
       notificationPreferences: {
         title: "通知設定",
@@ -479,6 +480,8 @@ export const ja: Translations = {
       acceptSensitive: '新しい機密要件を明示的に受け入れます。',
       preserveModified: '先に変更済みコピーを管理対象外のフォークとして保持します。'
     },
+=======
+>>>>>>> origin/main
     title: "スキル",
     searchPlaceholder: "スキルとツールセットを検索...",
     enabledOf: "{enabled}/{total} 有効",

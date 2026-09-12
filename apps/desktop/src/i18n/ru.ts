@@ -1513,6 +1513,7 @@ export const ru = defineLocale({
     }
   },
   skills: {
+<<<<<<< HEAD
     collective: {
       publishToTeam: 'Опубликовать для команды',
       submitForApproval: 'Отправить на одобрение',
@@ -1556,6 +1557,8 @@ export const ru = defineLocale({
       muteNotificationsSoon: 'Отключить уведомления (скоро)',
       unmuteNotificationsSoon: 'Включить уведомления (скоро)'
     },
+=======
+>>>>>>> origin/main
     tabSkills: 'Навыки',
     tabToolsets: 'Инструменты',
     configuringProfile: 'Настраивается:',

@@ -46,10 +46,17 @@ def test_registry_names_resolve_into_the_table():
     for name in HermesCLI._SLASH_DISPATCH:
         cmd = resolve_command(name)
         assert cmd is not None and HermesCLI._slash_handler(cmd.name) is not None, name
+<<<<<<< HEAD
     # Preserve historical dispatch while allowing new convention-based handlers.
     dispatched = {c.name for c in COMMAND_REGISTRY if HermesCLI._slash_handler(c.name)}
     # New convention handlers must remain reachable without freezing the registry.
     assert (set(OLD_CHAIN_COMMANDS) - {"exit"} | {"quit", "login", "wisdom"}) <= dispatched
+=======
+    # registry commands the CLI never handled inline must still fall through
+    dispatched = {c.name for c in COMMAND_REGISTRY if HermesCLI._slash_handler(c.name)}
+    # /login has no old branch; it resolves through the naming-convention fallback.
+    assert dispatched == set(OLD_CHAIN_COMMANDS) - {"exit"} | {"quit", "login"}
+>>>>>>> origin/main
 
 
 def _cli():
@@ -95,6 +102,7 @@ def test_unknown_command_falls_through():
     with patch.object(HermesCLI, "_process_unregistered_slash", return_value=True) as m:
         assert c.process_command("/definitely-not-a-command x") is True
         m.assert_called_once_with("/definitely-not-a-command x", "/definitely-not-a-command x")
+<<<<<<< HEAD
 
 
 def test_wisdom_convention_handler_receives_original_arguments():
@@ -104,3 +112,5 @@ def test_wisdom_convention_handler_receives_original_arguments():
         assert c.process_command("/wisdom inspect Team-Runbook") is True
         handler.assert_called_once_with("/wisdom inspect Team-Runbook")
     assert c._pending_resume_sessions is None
+=======
+>>>>>>> origin/main

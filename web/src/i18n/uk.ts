@@ -361,6 +361,7 @@ export const uk: Translations = {
   },
 
   skills: {
+<<<<<<< HEAD
     wisdom: {
       notificationPreferences: {
         title: "Налаштування сповіщень",
@@ -480,6 +481,8 @@ export const uk: Translations = {
       acceptSensitive: 'Я явно приймаю нові чутливі вимоги.',
       preserveModified: 'Спочатку зберегти мою змінену копію як некерований форк.'
     },
+=======
+>>>>>>> origin/main
     title: "Навички",
     searchPlaceholder: "Пошук навичок та наборів інструментів...",
     enabledOf: "{enabled}/{total} увімкнено",

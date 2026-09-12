@@ -359,6 +359,7 @@ export const zhHant: Translations = {
   },
 
   skills: {
+<<<<<<< HEAD
     wisdom: {
       notificationPreferences: {
         title: "通知設定",
@@ -476,6 +477,8 @@ export const zhHant: Translations = {
       acceptSensitive: '我明確接受新的敏感需求。',
       preserveModified: '先將我修改過的副本保留為不受管理的分支。'
     },
+=======
+>>>>>>> origin/main
     title: "技能",
     searchPlaceholder: "搜尋技能與工具集...",
     enabledOf: "已啟用 {enabled}/{total}",

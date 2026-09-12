@@ -76,6 +76,7 @@ class TestBlankSlateMinimalToolsets:
                          "terminal", "vision_analyze", "write_file"]
 
 
+<<<<<<< HEAD
     def test_kept_skills_can_present_consent_when_wisdom_is_available(self, monkeypatch):
         import model_tools
         from hermes_cli.tools_config import _get_platform_tools
@@ -100,6 +101,8 @@ class TestBlankSlateMinimalToolsets:
         }
 
 
+=======
+>>>>>>> origin/main
 class TestBlankSlateMinimizeConfig:
     def test_optional_features_turned_off(self):
         cfg = {}

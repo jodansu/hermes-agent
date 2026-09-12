@@ -391,6 +391,7 @@ class TestObjectBuilding:
         names = [e["name"] for e in tree["entries"]]
         assert names == sorted(names)
 
+<<<<<<< HEAD
     def test_unicode_tree_matches_cross_writer_utf8_hash(self, tmp_path):
         root = tmp_path / "unicode-tree"
         root.mkdir()
@@ -402,6 +403,8 @@ class TestObjectBuilding:
         tree = json.loads(objects.objects[address][1])
         assert [entry["name"] for entry in tree["entries"]] == ["\ue000.txt", "\U00010000.txt"]
 
+=======
+>>>>>>> origin/main
     def test_build_tree_dedups_identical_blobs(self, tmp_path):
         d = tmp_path / "skill"
         (d / "a").mkdir(parents=True)

@@ -451,8 +451,11 @@ prerequisites:                     # Optional legacy runtime requirements
   commands: [curl, jq]             #   Advisory only; does not hide the skill
 metadata:
   hermes:
+<<<<<<< HEAD
     editorial_name: My Skill          # Optional human-readable UI title
     editorial_description: What this skill helps a person accomplish.
+=======
+>>>>>>> origin/main
     tags: [Category, Subcategory, Keywords]
     related_skills: [other-skill-name]
     fallback_for_toolsets: [web]       # Optional — show only when toolset is unavailable
@@ -485,12 +488,15 @@ Known failure modes and how to handle them.
 How the agent confirms it worked.
 ```
 
+<<<<<<< HEAD
 `metadata.hermes.editorial_name` and `editorial_description` are optional,
 human-facing presentation copy. They may use natural titles and fuller prose
 than the routing-focused top-level fields. Hermes continues to identify and
 route skills with `name` and `description`; UIs fall back to that canonical
 pair when editorial copy is absent.
 
+=======
+>>>>>>> origin/main
 ### Platform-specific skills
 
 Skills can declare which OS platforms they support via the `platforms` frontmatter field. Skills with this field are automatically hidden from the system prompt, `skills_list()`, and slash commands on incompatible platforms.

@@ -1,6 +1,11 @@
 import { AssistantRuntimeProvider, type ThreadMessage, useExternalStoreRuntime } from '@assistant-ui/react'
+<<<<<<< HEAD
 import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
+=======
+import { cleanup, fireEvent, render } from '@testing-library/react'
+import { afterEach, describe, expect, it } from 'vitest'
+>>>>>>> origin/main
 
 import { $displayTimestamps } from '@/store/display-timestamps'
 
@@ -14,6 +19,7 @@ $displayTimestamps.set(true)
 const timestamp = new Date('2026-05-01T00:00:00.000Z')
 stubThreadEnvironment()
 
+<<<<<<< HEAD
 const securityCheck = {
   schema_version: 1,
   status: 'pass',
@@ -43,6 +49,8 @@ const professionalismCheck = {
   ]
 }
 
+=======
+>>>>>>> origin/main
 function Harness({ text, asyncResult }: { text: string; asyncResult?: string }) {
   const message = {
     id: 'system-1',
@@ -73,11 +81,15 @@ function expectTimestampSeparated(container: HTMLElement, precedingText: string)
   expect(row?.textContent).toContain(`${precedingText} ${stamp}`)
 }
 
+<<<<<<< HEAD
 afterEach(() => {
   cleanup()
   Reflect.deleteProperty(window, 'hermesDesktop')
   window.location.hash = ''
 })
+=======
+afterEach(cleanup)
+>>>>>>> origin/main
 
 describe('background report disclosure', () => {
   it('keeps result bodies out of the transcript until opened and removes them when collapsed', () => {
@@ -117,6 +129,7 @@ describe('system message timestamp text separation', () => {
 
     expectTimestampSeparated(container, 'rerun tests')
   })
+<<<<<<< HEAD
 
   it('renders Wisdom slash output as a readable command result', () => {
     const { container } = render(
@@ -269,4 +282,6 @@ describe('system message timestamp text separation', () => {
     expect(row?.className).not.toContain('w-[min(92%,56rem)]')
     expect(row?.className).not.toContain('text-(--ui-text-secondary)')
   })
+=======
+>>>>>>> origin/main
 })
